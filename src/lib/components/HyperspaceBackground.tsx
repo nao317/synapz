@@ -33,7 +33,7 @@ export const HyperspaceBackground: React.FC = () => {
             });
         }
 
-        const speed = 1;
+        const speed = 0.3;
 
         const draw = () => {
             ctx.fillStyle = "black";
@@ -51,7 +51,7 @@ export const HyperspaceBackground: React.FC = () => {
                 const sx = (star.x / star.z) * width;
                 const sy = (star.y / star.z) * height;
 
-                const radius = (1 - star.z / width) * 3;
+                const radius = Math.max(0.1, (1 - star.z / width) * 3);
                 ctx.beginPath();
                 ctx.arc(sx, sy, radius, 0, Math.PI * 2);
                 ctx.fillStyle = "white";
