@@ -1,0 +1,149 @@
+:root {
+    --bg: #0b0f14;
+    --card: #0f1720;
+    --muted: #94a3b8;
+    --accent-start: #8ab4f8;
+    --accent-end: #4f86f7;
+    --glass: rgba(255, 255, 255, 0.03);
+    --focus: rgba(79, 134, 247, 0.35);
+    --text: #e6eef8;
+    --radius: 12px;
+}
+
+/* 画面全体 */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* ログインカード */
+.form {
+    background: var(--card);
+    padding: 40px 48px;
+    border-radius: var(--radius);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* タイトル */
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* 入力フィールド */
+.input {
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--glass);
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+    border: 1px solid var(--focus);
+    box-shadow: 0 0 0 3px var(--focus);
+}
+
+/* メインボタン */
+.button {
+    margin-top: 6px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+    color: white;
+    box-shadow: 0 6px 18px rgba(79, 134, 247, 0.18);
+    transition: opacity 0.2s;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+/* 区切り線 */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent);
+}
+
+/* サブボタン（Googleなど） */
+.secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: var(--glass);
+    cursor: pointer;
+    color: var(--text);
+    transition: background 0.2s, border 0.2s;
+}
+
+.secondary:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* アイコン */
+.icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* サインアップ誘導 */
+.signup {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+}
+
+.link {
+    color: var(--accent-start);
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* フッター */
+.foot {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--muted);
+}
