@@ -1,0 +1,15 @@
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: var(--accent); /* 今のネオン色を使う */
+    margin-left: 2px;
+    vertical-align: bottom;
+    animation: blink 1.7s infinite;
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}

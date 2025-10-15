@@ -3,14 +3,16 @@
 // login.tsx
 import React, { useState } from 'react';
 import styles from './login.module.css';
-
+import TypewriterText from '../../lib/components/TypewriterText';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Login</h1>
+            <TypewriterText>
+                <h1 className={styles.title}>Login</h1>
+            </TypewriterText>
             <form className={styles.form}>
                 <input
                     type="email"
@@ -27,7 +29,7 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit" className={styles.button}>
-                    Sign In
+                    Log In
                 </button>
             </form>
         </div>
