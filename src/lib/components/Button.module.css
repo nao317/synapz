@@ -1,69 +1,68 @@
 .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    cursor: pointer;
+    margin-top: 0.5rem;
+    padding: 12px 16px;
+    border-radius: 12px;
     border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(90deg, #090e6e, #b3e5fc);
+    color: #0a3269;
+    transition: transform 0.25s ease, box-shadow 0.4s ease, background 0.4s ease;
+    box-shadow: 0 0 16px rgba(150, 220, 255, 0.45), 0 0 32px rgba(150, 220, 255, 0.25);
 }
 
+/* Disabled */
 .button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-/* === Variant === */
+/* === Variants === */
 .primary {
-    background-color: #0070f3;
-    color: white;
+    background: linear-gradient(90deg, #033361, #127bc6);
+    color: #bcb8b8;
 }
 
 .primary:hover {
-    background-color: #0059c9;
+    transform: translateY(-2px);
+    background: linear-gradient(90deg, #536eba, #509ab5);
+    box-shadow: 0 0 24px rgba(180, 240, 255, 0.6), 0 0 48px rgba(150, 220, 255, 0.4);
+    animation: glowPulse 2.5s infinite ease-in-out;
 }
 
 .secondary {
-    background-color: #e5e5e5;
-    color: #222;
+    background: linear-gradient(90deg, #ffd6ff, #e0bbff);
+    color: #4b0082;
 }
 
 .secondary:hover {
-    background-color: #d4d4d4;
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px rgba(255, 200, 255, 0.6), 0 0 48px rgba(255, 200, 255, 0.3);
+    animation: glowPulse 2.5s infinite ease-in-out;
 }
 
 .outline {
-    border: 1px solid #ccc;
+    border: 1px solid rgba(180, 240, 255, 0.6);
     background-color: transparent;
-    color: #333;
+    color: #166e8b;
+    box-shadow: 0 0 10px rgba(63, 145, 186, 0.3);
 }
 
 .outline:hover {
-    background-color: #f3f3f3;
+    background: rgba(180, 240, 255, 0.1);
+    box-shadow: 0 0 20px rgba(180, 240, 255, 0.6);
 }
 
-.ghost {
-    background: none;
-    color: #333;
-}
-
-.ghost:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-/* === Size === */
-.sm {
-    padding: 4px 10px;
-    font-size: 0.875rem;
-}
-
-.md {
-    padding: 8px 16px;
-    font-size: 1rem;
-}
-
-.lg {
-    padding: 12px 20px;
-    font-size: 1.125rem;
+/* === Glow Animation === */
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 16px rgba(180, 240, 255, 0.4), 0 0 32px rgba(180, 240, 255, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 28px rgba(180, 240, 255, 0.6), 0 0 52px rgba(180, 240, 255, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 16px rgba(180, 240, 255, 0.4), 0 0 32px rgba(180, 240, 255, 0.2);
+    }
 }

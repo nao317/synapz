@@ -2,41 +2,52 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', 'Noto Sans JP', sans-serif;
-  background: linear-gradient(135deg, #0b1e3d, #1c2b4a); /* 星空に合う濃い色 */
+  background: linear-gradient(135deg, #0b1e3d, #1c2b4a);
   color: #fff;
   overflow-x: hidden;
 }
 
-.home-container {
+.pageRoot {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ===== Hero（スクロールで移動） ===== */
+.hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   text-align: center;
-  gap: 2rem;
-  position: relative; /* canvas 背景の上に重ねる */
+  background: transparent;
+  z-index: 10;
 }
 
-.home-title {
-  font-size: 3rem;
+/* タイトル部分 */
+.homeTitle {
+  font-size: 3.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #00bcd4, #0070f3);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent;
   letter-spacing: 0.05em;
   z-index: 1;
 }
 
-.home-button-container {
+.homeButtonContainer {
   display: flex;
   gap: 1.5rem;
   z-index: 1;
+  margin-top: 1.5rem;
 }
 
-.home-button-container button {
+.homeButtonContainer button {
   min-width: 140px;
   font-size: 1rem;
   border-radius: 12px;
@@ -45,7 +56,42 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.home-button-container button:hover {
+.homeButtonContainer button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+}
+
+/* ===== Concept以下 ===== */
+.contentWrapper {
+  margin-top: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.conceptSection {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 1.5rem;
+  text-align: center;
+  color: #eaf0ff;
+  background: transparent;
+}
+
+.conceptTitle {
+  font-size: 2.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00bcd4, #0070f3);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.conceptText {
+  font-size: 1.15rem;
+  max-width: 700px;
+  line-height: 1.75;
 }
