@@ -2,11 +2,11 @@
     display: inline-block;
     width: 2px;
     height: 1em;
-    background-color: var(--accent); /* 今のネオン色を使う */
+    background-color: #00bcd4; /* ネオンブルー */
     margin-left: 2px;
     vertical-align: bottom;
     animation: blink 1.7s infinite;
-    box-shadow: 0 0 8px var(--accent-glow);
+    box-shadow: 0 0 8px rgba(0, 188, 212, 0.6);
 }
 
 @keyframes blink {
