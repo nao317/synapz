@@ -61,6 +61,17 @@ body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
 }
 
+.scrollHintContainer {
+  position: absolute;
+  bottom: 3rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 /* ===== Concept以下 ===== */
 .contentWrapper {
   margin-top: 100vh;
