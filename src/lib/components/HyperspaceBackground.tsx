@@ -10,7 +10,6 @@ interface Star {
 
 export const HyperspaceBackground: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const stars: Star[] = [];
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -24,6 +23,7 @@ export const HyperspaceBackground: React.FC = () => {
         canvas.height = height;
 
         const numStars = 400;
+        const stars: Star[] = [];
 
         for (let i = 0; i < numStars; i++) {
             stars.push({
