@@ -1,0 +1,76 @@
+/* ScrollHint.module.css */
+.container {
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+    margin: 0 auto;
+}
+
+.container:hover {
+    opacity: 0.8;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.message {
+    color: #00d4ff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+    text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+    letter-spacing: 0.5px;
+}
+
+.arrows {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.arrow {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid #00d4ff;
+    border-bottom: 2px solid #00d4ff;
+    transform: rotate(45deg);
+    box-shadow: 0 0 4px rgba(0, 212, 255, 0.3);
+}
+
+.arrow:first-child {
+    animation: bounce1 2s infinite;
+}
+
+.arrow:last-child {
+    animation: bounce2 2s infinite 0.3s;
+}
+
+@keyframes bounce1 {
+    0%, 20%, 100% {
+        transform: rotate(45deg) translateY(0);
+        opacity: 0.4;
+    }
+    10% {
+        transform: rotate(45deg) translateY(8px);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce2 {
+    0%, 20%, 100% {
+        transform: rotate(45deg) translateY(0);
+        opacity: 0.4;
+    }
+    10% {
+        transform: rotate(45deg) translateY(8px);
+        opacity: 1;
+    }
+}

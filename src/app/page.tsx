@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/lib/components/Button";
 import styles from "./page.module.css";
 import TypewriterText  from '../lib/components/TypewriterText';
+import ScrollHint from '../lib/components/ScrollHint';
 import { HyperspaceBackground } from "@/lib/components/HyperspaceBackground";
 import { useRouter } from 'next/navigation';
 
@@ -62,6 +63,16 @@ export default function Home() {
           <Button variant="primary" size="md" onClick={() => router.push("/signup")}>
             サインアップ
           </Button>
+        </motion.div>
+
+        {/* スクロールヒントをHero内に配置 */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+          className={styles.scrollHintContainer}
+        >
+          <ScrollHint />
         </motion.div>
       </motion.div>
 
