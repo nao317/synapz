@@ -6,10 +6,10 @@
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    background: linear-gradient(90deg, #090e6e, #b3e5fc);
+    background: linear-gradient(90deg, #090e6e, #02547a);
     color: #0a3269;
     transition: transform 0.25s ease, box-shadow 0.4s ease, background 0.4s ease;
-    box-shadow: 0 0 16px rgba(150, 220, 255, 0.45), 0 0 32px rgba(150, 220, 255, 0.25);
+    box-shadow: 0 0 16px rgba(8, 55, 79, 0.45), 0 0 32px rgba(150, 220, 255, 0.25);
 }
 
 /* Disabled */
@@ -20,15 +20,15 @@
 
 /* === Variants === */
 .primary {
-    background: linear-gradient(90deg, #033361, #127bc6);
-    color: #bcb8b8;
+    background: linear-gradient(90deg, #033361, #033361);
+    color: #dbdada;
 }
 
 .primary:hover {
     transform: translateY(-2px);
-    background: linear-gradient(90deg, #536eba, #509ab5);
-    box-shadow: 0 0 24px rgba(180, 240, 255, 0.6), 0 0 48px rgba(150, 220, 255, 0.4);
-    animation: glowPulse 2.5s infinite ease-in-out;
+    background: linear-gradient(90deg, #536eba, #507cb5);
+    box-shadow: 0 0 24px rgba(43, 64, 69, 0.6), 0 0 48px rgba(1, 42, 123, 0.4);
+    animation: glowPulse 7s infinite ease-in-out;
 }
 
 .secondary {
@@ -39,30 +39,30 @@
 .secondary:hover {
     transform: translateY(-2px);
     box-shadow: 0 0 24px rgba(255, 200, 255, 0.6), 0 0 48px rgba(255, 200, 255, 0.3);
-    animation: glowPulse 2.5s infinite ease-in-out;
+    animation: glowPulse 5s infinite ease-in-out;
 }
 
 .outline {
-    border: 1px solid rgba(180, 240, 255, 0.6);
+    border: 1px solid rgba(180, 240, 255, 0.137);
     background-color: transparent;
-    color: #166e8b;
+    color: #3c90ac;
     box-shadow: 0 0 10px rgba(63, 145, 186, 0.3);
 }
 
 .outline:hover {
     background: rgba(180, 240, 255, 0.1);
-    box-shadow: 0 0 20px rgba(180, 240, 255, 0.6);
+    box-shadow: 0 0 20px rgba(6, 43, 53, 0.6);
 }
 
 /* === Glow Animation === */
 @keyframes glowPulse {
     0% {
-        box-shadow: 0 0 16px rgba(180, 240, 255, 0.4), 0 0 32px rgba(180, 240, 255, 0.2);
+        box-shadow: 0 0 16px rgba(78, 106, 113, 0.4), 0 0 32px rgba(180, 240, 255, 0.2);
     }
     50% {
-        box-shadow: 0 0 28px rgba(180, 240, 255, 0.6), 0 0 52px rgba(180, 240, 255, 0.4);
+        box-shadow: 0 0 28px rgba(43, 107, 123, 0.6), 0 0 52px rgba(32, 80, 92, 0.4);
     }
     100% {
-        box-shadow: 0 0 16px rgba(180, 240, 255, 0.4), 0 0 32px rgba(180, 240, 255, 0.2);
+        box-shadow: 0 0 16px rgba(3, 84, 105, 0.4), 0 0 32px rgba(5, 78, 96, 0.2);
     }
 }
