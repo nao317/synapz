@@ -2,7 +2,7 @@
 
 // login.tsx
 import React, { useState } from 'react';
-import styles from './login.module.css';
+import styles from './signup.module.css';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -10,8 +10,9 @@ export default function LoginPage() {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Login</h1>
+            <h1 className={styles.title}>SignUp</h1>
             <form className={styles.form}>
+              <span>email</span>
                 <input
                     type="email"
                     placeholder="Email"
@@ -19,6 +20,15 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
+                <span>password</span>
+                <input
+                    type="password"
+                    placeholder="Password"
+                    className={styles.input}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <span>password confirmation</span>
                 <input
                     type="password"
                     placeholder="Password"
