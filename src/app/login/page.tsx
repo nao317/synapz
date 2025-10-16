@@ -11,7 +11,7 @@ export default function LoginPage() {
     return (
         <div className={styles.container}>
             <TypewriterText>
-                <h1 className={styles.title}>Login</h1>
+                <h1 className={styles.title}>Log In</h1>
             </TypewriterText>
             <form className={styles.form}>
                 <input

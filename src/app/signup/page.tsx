@@ -3,16 +3,26 @@
 // login.tsx
 import React, { useState } from 'react';
 import styles from './signup.module.css';
-
+import TypewriterText from '../../lib/components/TypewriterText';
 export default function LoginPage() {
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmpassword, setConfirmpassword] = useState('');
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>SignUp</h1>
+            <TypewriterText>
+                <h1 className={styles.title}>Sign In</h1>
+            </TypewriterText>
             <form className={styles.form}>
-              <span>email</span>
+                <input
+                    type="name"
+                    placeholder="Username"
+                    className={styles.input}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
                 <input
                     type="email"
                     placeholder="Email"
@@ -20,7 +30,6 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <span>password</span>
                 <input
                     type="password"
                     placeholder="Password"
@@ -28,13 +37,12 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <span>password confirmation</span>
                 <input
                     type="password"
-                    placeholder="Password"
+                    placeholder="Confirm Password"
                     className={styles.input}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={confirmpassword}
+                    onChange={(e) => setConfirmpassword(e.target.value)}
                 />
                 <button type="submit" className={styles.button}>
                     Sign In
