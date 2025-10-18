@@ -34,16 +34,32 @@ export default function MyPage() {
             <div className={styles.profileInfo}>
          <div className={styles.username}>ユーザー名</div>
          <div className={styles.email}>email@example.com</div>
+
           <div className={styles.profileStats}>
-          <span>フォロー: 123</span>
-          <span>フォロワー: 456</span>
-          <span>ブックマーク: 78</span>
-         </div>
+  <div className={styles.statCard}>
+    <div className={styles.statNumber}>123</div>
+    <div className={styles.statLabel}>フォロー</div>
+  </div>
+  <div className={styles.statCard}>
+    <div className={styles.statNumber}>456</div>
+    <div className={styles.statLabel}>フォロワー</div>
+  </div>
+  <div className={styles.statCard}>
+    <div className={styles.statNumber}>78</div>
+    <div className={styles.statLabel}>ブックマーク</div>
+  </div>
+  <div className={styles.statCard}>
+    <div className={styles.statNumber}>5</div>
+    <div className={styles.statLabel}>投稿</div>
+  </div>
+</div>
+
          <Button>edit</Button>      
          </div>
          </div>
          </div>
           <div className={styles.postsContainer}>
+
   <div className={styles.postCard}>
     <h3>投稿タイトル</h3>
     <p>投稿の本文</p>

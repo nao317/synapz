@@ -101,12 +101,34 @@ body {
   gap: 0.5rem; /* 各要素の間隔 */
 }
 
-
 .profileStats {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2列、幅均等 */
+  grid-template-rows: repeat(2, auto); /* 2行 */
   gap: 1rem;
-  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  max-width: 300px; /* 必要に応じて調整 */
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 中央揃え */
+  justify-content: center;
+  width: 100%; /* これで均等幅 */
+  text-align: center;
+}
+
+
+.statNumber {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.statLabel {
+  font-size: 0.8rem;
   color: #94a3b8;
 }
 
