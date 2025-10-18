@@ -1,0 +1,203 @@
+:root {
+    --bg: #0b0f14;
+    --surface: #121926;
+    --text: #e6eef8;
+    --accent: #00b4ff;
+    --accent-glow: rgba(0, 180, 255, 0.5);
+    --radius: 14px;
+    --transition: 0.25s ease;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(ellipse at top, #0b0f14, #080c12 80%);
+    color: var(--text);
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    overflow-x: hidden;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: radial-gradient(ellipse at top, #0b1522 0%, #050b13 100%);
+    color: #e6f7ff;
+    overflow: hidden;
+}
+
+.body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+    scroll-behavior: smooth;
+}
+
+.title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 2.2rem;
+    color: var(--accent);
+    text-shadow: 0 0 12px var(--accent-glow);
+    letter-spacing: 0.05em;
+}
+
+/* mypage.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 上寄せ */
+  min-height: 100vh;
+  padding: 5rem 1rem;
+  background: radial-gradient(ellipse at top, #0b0f14, #080c12 80%);
+  color: var(--text);
+  overflow-y: auto;
+  align-items: stretch; /* ← 追加：子要素の幅を伸ばす */
+}
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* プロフィールだけ中央寄せ */
+  gap: 1rem;
+}
+
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;       /* 横幅いっぱい */
+  max-width: none;  /* 投稿の最大幅 */
+  margin-top: 2rem;
+  align-items:stretch; /* 左寄せ */
+}
+
+
+.profileCard {
+  display: flex;
+  flex-direction: column; /* ← 横並びから縦並びに変更 */
+  align-items: center;    /* 中央寄せ */
+  gap: 1rem;              /* 各要素の間隔 */
+  background: #121926;
+  padding: 1.5rem 2rem;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0, 180, 255, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 横方向の中央揃え */
+  text-align: center;
+  gap: 0.5rem; /* 各要素の間隔 */
+}
+
+.profileStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2列、幅均等 */
+  grid-template-rows: repeat(2, auto); /* 2行 */
+  gap: 1rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  max-width: 300px; /* 必要に応じて調整 */
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 中央揃え */
+  justify-content: center;
+  width: 100%; /* これで均等幅 */
+  text-align: center;
+}
+
+
+.statNumber {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+
+.username {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.email {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+.button {
+    margin-top: 0.5rem;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(90deg, #00b4ff, #0088ff);
+    color: white;
+    transition: transform var(--transition), box-shadow var(--transition);
+    box-shadow: 0 0 12px rgba(0, 180, 255, 0.25);
+}
+
+.postCard {
+  background: var(--surface);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 0 12px rgba(0, 180, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.postCard h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--accent);
+}
+
+.postCard p {
+  margin: 0 0 0.5rem 0;
+}
+
+.postDate {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.profileImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%; /* 丸くする */
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.profileBio {
+  width: 100%;
+  max-width: 400px;
+  min-height: 80px;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #1a2030;
+  color: var(--text);
+  resize: vertical; /* 高さを自由に変更可能 */
+  font-size: 0.95rem;
+}
