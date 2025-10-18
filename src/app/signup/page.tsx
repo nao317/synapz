@@ -3,26 +3,42 @@
 // login.tsx
 import React, { useState } from 'react';
 import styles from './signup.module.css';
-import { post } from '../../lib/api';
+import { supabase } from '@/lib/supabaseClient';
 import TypewriterText from '../../lib/components/TypewriterText';
 export default function SignupPage() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
-
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         if (password !== confirmpassword) {
             alert("パスワードが一致しません");
             return;
         }
-        const data = await post("/signup", { username, email, password });
-        if (data.message) {
-            alert("サインアップ成功");
-            window.location.href = "/login";
+
+        setLoading(true);
+        setError(null);
+
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: { username }, // ← Supabaseユーザーにカスタムデータとして登録できる
+            },
+        });
+
+        setLoading(false);
+
+        if (error) {
+            console.error(error);
+            alert("Failure" + error.message);
         } else {
-            alert("サインアップ失敗");
+            alert("アカウントが登録されました！　メールから認証を完了してください！");
+            window.location.href = "/login";
         }
     };
 
@@ -60,9 +76,10 @@ export default function SignupPage() {
                     value={confirmpassword}
                     onChange={(e) => setConfirmpassword(e.target.value)}
                 />
-                <button type="submit" className={styles.button}>
-                    Sign Up
+                <button type="submit" className={styles.button} disabled={loading}>
+                    {loading ? "Signing Up..." : "Sign Up"}
                 </button>
+                {error && <p className={styles.error}>{error}</p>}
             </form>
         </div>
     );

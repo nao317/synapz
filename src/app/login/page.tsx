@@ -2,23 +2,35 @@
 
 // login.tsx
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './login.module.css';
-import { post } from '../../lib/api';
+import { supabase } from '@/lib/supabaseClient';
 import TypewriterText from '../../lib/components/TypewriterText';
 
 export default function LoginPage() {
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const handleSubmit =async (e: React.FormEvent) => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        const data = await post("/login", { email, password });
-        if (data.token) {
-            localStorage.setItem("token", data.token);
-            alert("ログイン成功");
-            window.location.href = "/dashboard";
-        } else {
-            alert("ログイン失敗");
+        setLoading(true);
+        setError(null);
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+
+        setLoading(false);
+
+        if (error) {
+            console.error(error);
+            setError("ログイン失敗: " + error.message);
+        } else if (data?.session) {
+            // ログイン成功時にdashboardにリダイレクト
+            router.push("/dashboard");
         }
     };
 
@@ -27,7 +39,12 @@ export default function LoginPage() {
             <TypewriterText>
                 <h1 className={styles.title}>Log In</h1>
             </TypewriterText>
-            <form className={styles.form} onSubmit={handleSubmit}>
+            {error && (
+                <div className={styles.error}>
+                    {error}
+                </div>
+            )}
+            <form className={styles.form} onSubmit={handleLogin}>
                 <input
                     type="email"
                     placeholder="Email"
@@ -42,8 +59,8 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit" className={styles.button}>
-                    Log In
+                <button type="submit" className={styles.button} disabled={loading}>
+                    {loading ? "ログイン中..." : "Log In"}
                 </button>
             </form>
         </div>
