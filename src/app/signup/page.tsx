@@ -2,6 +2,7 @@
 
 // signup.tsx
 import React, { useState } from 'react';
+import Link from 'next/link';
 import styles from './signup.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
 import { getSupabaseClient } from '@/lib/supabaseClient';
@@ -89,8 +90,9 @@ export default function SignupPage() {
                     onChange={(e) => setConfirmpassword(e.target.value)}
                 />
                 <button type="submit" className={styles.button} disabled={loading}>
-                    {loading ? "Signing Up..." : "Sign Up"}
+                    {loading ? "登録中..." : "新規登録"}
                 </button>
+                <Link href="/login" className={styles.link}>すでにアカウントを持っている</Link>
             </form>
         </div>
     );

@@ -135,3 +135,34 @@ body {
         padding: 1.6rem 2rem;
     }
 }
+
+.link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #7f92bc;
+    font-size: 0.95rem;
+    text-decoration: none;
+    position: relative;
+}
+
+/* 下線をアニメーションで出す */
+.link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, #8e0202, #8e0202);
+    transition: width 0.15s ease;
+    border-radius: 2px;
+}
+
+.link:hover {
+    color: #c9253b;
+    text-shadow: 0 0 8px rgba(133, 16, 7, 0.6);
+}
+
+.link:hover::after {
+    width: 83%;
+}
