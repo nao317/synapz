@@ -188,3 +188,16 @@ body {
   object-fit: cover;
   margin-bottom: 1rem;
 }
+
+.profileBio {
+  width: 100%;
+  max-width: 400px;
+  min-height: 80px;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #1a2030;
+  color: var(--text);
+  resize: vertical; /* 高さを自由に変更可能 */
+  font-size: 0.95rem;
+}

@@ -34,6 +34,7 @@ export default function MyPage() {
             <div className={styles.profileInfo}>
          <div className={styles.username}>ユーザー名</div>
          <div className={styles.email}>email@example.com</div>
+         <div className={styles.plofileBio}>プロフィール</div>
 
           <div className={styles.profileStats}>
   <div className={styles.statCard}>
@@ -54,7 +55,7 @@ export default function MyPage() {
   </div>
 </div>
 
-         <Button>edit</Button>      
+         <Button>編集</Button>      
          </div>
          </div>
          </div>
