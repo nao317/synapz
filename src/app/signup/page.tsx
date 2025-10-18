@@ -1,28 +1,63 @@
 "use client";
 
-// login.tsx
-import React, { useState } from 'react';
+// signup.tsx
+import React, { useState, useEffect } from 'react';
 import styles from './signup.module.css';
-import { post } from '../../lib/api';
 import TypewriterText from '../../lib/components/TypewriterText';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 export default function SignupPage() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
-
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    
+    // Supabaseクライアントをクライアントサイドで初期化
+    const [supabase, setSupabase] = useState<SupabaseClient | null>(null);
+    
+    useEffect(() => {
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        
+        if (supabaseUrl && supabaseAnonKey) {
+            const client = createClient(supabaseUrl, supabaseAnonKey);
+            setSupabase(client);
+        }
+    }, []);
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (password !== confirmpassword) {
-            alert("パスワードが一致しません");
+
+        if (!supabase) {
+            setError('Supabaseクライアントが初期化されていません');
             return;
         }
-        const data = await post("/signup", { username, email, password });
-        if (data.message) {
-            alert("サインアップ成功");
-            window.location.href = "/login";
+
+        if (password !== confirmpassword) {
+            setError("パスワードが一致しません");
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: { username }, // ← Supabaseユーザーにカスタムデータとして登録できる
+            },
+        });
+
+        setLoading(false);
+
+        if (error) {
+            console.error(error);
+            setError("登録失敗: " + error.message);
         } else {
-            alert("サインアップ失敗");
+            alert("アカウントが登録されました！　メールから認証を完了してください！");
+            window.location.href = "/login";
         }
     };
 
@@ -31,6 +66,11 @@ export default function SignupPage() {
             <TypewriterText>
                 <h1 className={styles.title}>Sign Up</h1>
             </TypewriterText>
+            {error && (
+                <div className={styles.error}>
+                    {error}
+                </div>
+            )}
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input
                     type="name"
@@ -60,8 +100,8 @@ export default function SignupPage() {
                     value={confirmpassword}
                     onChange={(e) => setConfirmpassword(e.target.value)}
                 />
-                <button type="submit" className={styles.button}>
-                    Sign Up
+                <button type="submit" className={styles.button} disabled={loading}>
+                    {loading ? "Signing Up..." : "Sign Up"}
                 </button>
             </form>
         </div>
