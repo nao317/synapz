@@ -1,23 +1,31 @@
-"use client";
+'use client';
 
-// notifications.tsx
 import React, { useState } from 'react';
 import styles from './notifications.module.css';
-import TypewriterText from '../../lib/components/TypewriterText';
-export default function notifications() {
-    const [notifications, setNotifications] = useState<string[]>([]);//複数の通知をリストで表示
-    //const [newNotification, setNewNotification] = useState('');
+import Header from '../../lib/components/Header';
+
+export default function Notifications() {
+    const [notifications, setNotifications] = useState<string[]>([]);
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>Notifications</h1>
-            <ul className={styles.list}>
-                {notifications.map((note, index) => (
-                    <li key={index} className={styles.item}>
-                        {note}
-                    </li>
-                ))}
-            </ul>
+        <div className={styles.notificationsPage}>
+            {/* Header を最上部に固定 */}
+            <div className={styles.headerWrapper}>
+                <Header />
+            </div>
+
+            {/* コンテンツ領域 */}
+            <main className={styles.main}>
+                <h1 className={styles.title}>Notifications</h1>
+
+                <ul className={styles.list}>
+                    {notifications.map((note, index) => (
+                        <li key={index} className={styles.item}>
+                            {note}
+                        </li>
+                    ))}
+                </ul>
+            </main>
         </div>
     );
 }
