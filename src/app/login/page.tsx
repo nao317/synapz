@@ -6,7 +6,9 @@ import { useRouter } from 'next/navigation';
 import styles from './login.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
 import { getSupabaseClient } from '@/lib/supabaseClient';
+import  Link  from 'next/link';
 import { testSupabaseClientSingleton, checkEnvironmentVariables } from '@/lib/supabaseClientTest';
+import { style } from 'framer-motion/client';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -78,8 +80,9 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit" className={styles.button} disabled={loading}>
-                    {loading ? "ログイン中..." : "Log In"}
+                    {loading ? "ログイン中..." : "ログイン"}
                 </button>
+                <Link href="/signup" className={styles.link}>まだアカウントを持っていない</Link>
             </form>
         </div>
     );
