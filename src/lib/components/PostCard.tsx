@@ -1,20 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "./PostCard.module.css";
 
 type PostCardProps = {
-    userIconUel: string;
+    userIconUrl: string;
     username: string;
     content: string;
 };
 
-export default function PostCard({ userIconUel, username, content }: PostCardProps) {
+export default function PostCard({ userIconUrl, username, content }: PostCardProps) {
     return (
         <div className = {styles.postCard}>
             <div className = {styles.header}>
                 <div>
-                    <img src="{userIconUrl}" alt="${username} Icon" className={styles.userIcon}/>
+                    <img 
+                        src="{userIconUrl}" 
+                        alt='${username} Icon' 
+                        className={styles.userIcon} 
+                    />
                 </div>
                 <span className = {styles.username}>
                     {username}
