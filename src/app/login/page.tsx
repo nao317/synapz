@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './login.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from '@/lib/supabaseClient';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -14,22 +14,10 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     
-    // Supabaseクライアントをクライアントサイドで初期化
-    const [supabase, setSupabase] = useState<SupabaseClient | null>(null);
-    
-    useEffect(() => {
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-        
-        if (supabaseUrl && supabaseAnonKey) {
-            const client = createClient(supabaseUrl, supabaseAnonKey);
-            setSupabase(client);
-        }
-    }, []);
-    
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         
+        const supabase = getSupabaseClient();
         if (!supabase) {
             setError('Supabaseクライアントが初期化されていません');
             return;
