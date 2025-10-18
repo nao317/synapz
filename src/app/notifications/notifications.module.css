@@ -56,6 +56,42 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+/* タブバー（いいね・フォロー・コメント） */
+.tabBar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    position: sticky; /* 上部に固定 */
+    top: 0;
+    background-color: #0b1522; /* Header と違和感ない色に */
+    padding: 0.5rem 0;
+    z-index: 10;
+}
+
+/* タブボタン */
+.tabBar button {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #121926;
+    color: #e6f7ff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.tabBar button:hover {
+    background-color: rgba(0, 180, 255, 0.2);
+}
+
+/* 選択中のタブ */
+.activeTab {
+    background-color: #00b4ff;
+    color: #0b1522;
+    font-weight: bold;
+}
+
+
 .item:hover {
     transform: translateX(5px);
     box-shadow: 0 4px 20px rgba(0, 180, 255, 0.25);
