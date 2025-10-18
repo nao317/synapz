@@ -2,6 +2,7 @@
 
 // mypage.tsx
 import React, { useState } from 'react';
+import Image from 'next/image';
 import styles from './mypage.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
 import Header from '../../lib/components/Header';
@@ -16,9 +17,11 @@ export default function MyPage() {
         </TypewriterText>
 
          <div className={styles.profileCard}>
-            <img
+            <Image
             src="/profile-icon.png"
             alt="ユーザーのプロフィール画像"
+            width={100}
+            height={100}
             className={styles.profileIcon}
             />
             <div className={styles.profileInfo}>
