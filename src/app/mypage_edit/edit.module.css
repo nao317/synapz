@@ -1,0 +1,93 @@
+/* edit.module.css */
+
+/* 全体の背景と余白 */
+.dashboard {
+    background-color: #0b1522;
+    color: #e6f7ff;
+    min-height: 100vh;
+    font-family: "Helvetica", "Arial", sans-serif;
+  }
+  
+  /* コンテンツの中央寄せ */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  
+  /* プロフィールセクション */
+  .profileSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* ページタイトル */
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* プロフィールカード */
+  .profileCard {
+    display: flex;
+    background-color: #121926;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 180, 255, 0.2);
+    gap: 20px;
+    align-items: center;
+  }
+  
+  /* プロフィール画像 */
+  .profileIcon {
+    width: 120px;   /* 画像の幅 */
+    height: 120px;  /* 高さを固定して正方形に */
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  /* プロフィール情報全体 */
+  .profileInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* ラベル */
+  .label {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  
+  /* 入力欄 */
+  .input, .textarea {
+    background-color: #0b1522;
+    color: #e6f7ff;
+    border: 1px solid #00b4ff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.2s;
+  }
+  
+  .input:focus, .textarea:focus {
+    border-color: #00e0ff;
+  }
+  
+  /* テキストエリア */
+  .textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+  
+  /* ボタンのスタイル調整（Buttonコンポーネント用） */
+  .button {
+    margin-top: 12px;
+    align-self: center;
+  }
+  
