@@ -6,12 +6,19 @@ import Image from 'next/image';
 import styles from './mypage.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
 import Header from '../../lib/components/Header';
+import { Button } from '../../lib/components/Button';
 
 export default function MyPage() {
  return (
-    <div className={styles.container}>
-        <Header></Header>
+<div className={styles.dashboard}>
+<Header>
 
+</Header>
+
+
+    <div className={styles.container}>
+        
+        <div className={styles.profileSection}>
         <TypewriterText>
         <h1 className={styles.title}>My Page</h1>
         </TypewriterText>
@@ -32,7 +39,8 @@ export default function MyPage() {
           <span>フォロワー: 456</span>
           <span>ブックマーク: 78</span>
          </div>
-         <button className={styles.button}>編集</button>      
+         <Button>edit</Button>      
+         </div>
          </div>
          </div>
           <div className={styles.postsContainer}>
@@ -47,7 +55,7 @@ export default function MyPage() {
     <div className={styles.postDate}>2025/10/17</div>
   </div>
 </div>
-
+</div>
     </div>
   );
 }

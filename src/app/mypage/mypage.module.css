@@ -49,23 +49,58 @@ body {
 }
 
 /* mypage.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 上寄せ */
+  min-height: 100vh;
+  padding: 5rem 1rem;
+  background: radial-gradient(ellipse at top, #0b0f14, #080c12 80%);
+  color: var(--text);
+  overflow-y: auto;
+  align-items: stretch; /* ← 追加：子要素の幅を伸ばす */
+}
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* プロフィールだけ中央寄せ */
+  gap: 1rem;
+}
+
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;       /* 横幅いっぱい */
+  max-width: none;  /* 投稿の最大幅 */
+  margin-top: 2rem;
+  align-items:stretch; /* 左寄せ */
+}
+
+
 .profileCard {
   display: flex;
-  align-items: center; /* アイコンとテキストを横並び */
-  justify-content: space-between; /* 左：アイコン+情報、右：ボタン */
+  flex-direction: column; /* ← 横並びから縦並びに変更 */
+  align-items: center;    /* 中央寄せ */
+  gap: 1rem;              /* 各要素の間隔 */
   background: #121926;
   padding: 1.5rem 2rem;
   border-radius: 14px;
   box-shadow: 0 0 25px rgba(0, 180, 255, 0.1);
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
 }
+
 
 .profileInfo {
   display: flex;
-  flex-direction: column; /* 名前・メール・ステータスを縦に並べる */
-  margin-left: 1rem; /* アイコンとの間隔 */
+  flex-direction: column;
+  align-items: center; /* 横方向の中央揃え */
+  text-align: center;
+  gap: 0.5rem; /* 各要素の間隔 */
 }
+
 
 .profileStats {
   display: flex;
@@ -100,13 +135,6 @@ body {
     color: white;
     transition: transform var(--transition), box-shadow var(--transition);
     box-shadow: 0 0 12px rgba(0, 180, 255, 0.25);
-}
-
-.postsContainer {
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
 
 .postCard {
