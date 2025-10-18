@@ -107,6 +107,25 @@ body {
     animation: glowPulse 2s infinite;
 }
 
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.error {
+    background: rgba(255, 59, 48, 0.1);
+    border: 1px solid rgba(255, 59, 48, 0.3);
+    color: #ff3b30;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    max-width: 340px;
+    width: 100%;
+}
+
 /* モバイル対応 */
 @media (max-width: 480px) {
     .title {

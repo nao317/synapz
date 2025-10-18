@@ -1,10 +1,10 @@
 "use client";
 
-// login.tsx
-import React, { useState } from 'react';
+// signup.tsx
+import React, { useState, useEffect } from 'react';
 import styles from './signup.module.css';
-import { supabase } from '@/lib/supabaseClient';
 import TypewriterText from '../../lib/components/TypewriterText';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 export default function SignupPage() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -12,11 +12,30 @@ export default function SignupPage() {
     const [confirmpassword, setConfirmpassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    
+    // Supabaseクライアントをクライアントサイドで初期化
+    const [supabase, setSupabase] = useState<SupabaseClient | null>(null);
+    
+    useEffect(() => {
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        
+        if (supabaseUrl && supabaseAnonKey) {
+            const client = createClient(supabaseUrl, supabaseAnonKey);
+            setSupabase(client);
+        }
+    }, []);
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!supabase) {
+            setError('Supabaseクライアントが初期化されていません');
+            return;
+        }
+
         if (password !== confirmpassword) {
-            alert("パスワードが一致しません");
+            setError("パスワードが一致しません");
             return;
         }
 
@@ -35,7 +54,7 @@ export default function SignupPage() {
 
         if (error) {
             console.error(error);
-            alert("Failure" + error.message);
+            setError("登録失敗: " + error.message);
         } else {
             alert("アカウントが登録されました！　メールから認証を完了してください！");
             window.location.href = "/login";
@@ -47,6 +66,11 @@ export default function SignupPage() {
             <TypewriterText>
                 <h1 className={styles.title}>Sign Up</h1>
             </TypewriterText>
+            {error && (
+                <div className={styles.error}>
+                    {error}
+                </div>
+            )}
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input
                     type="name"
@@ -79,7 +103,6 @@ export default function SignupPage() {
                 <button type="submit" className={styles.button} disabled={loading}>
                     {loading ? "Signing Up..." : "Sign Up"}
                 </button>
-                {error && <p className={styles.error}>{error}</p>}
             </form>
         </div>
     );
