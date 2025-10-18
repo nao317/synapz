@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ChevronLeft, Home, Bell, User, PenSquare, LogOut } from 'lucide-react';
+import { ChevronLeft, Home, Bell, User, PenSquare, LogOut, Search } from 'lucide-react';
 import styles from './SideBar.module.css';
 import { useRouter } from 'next/navigation';
 
@@ -50,6 +50,7 @@ export default function SideBar({ isOpen, onClose }: SidebarProps) {
                         <Link href="/post"><PenSquare /> 投稿</Link>
                         <Link href="/notifications"><Bell /> 通知</Link>
                         <Link href="/mypage"><User /> マイページ</Link>
+                        <Link href="/search"><Search />検索</Link>
                     </nav>
 
                     <button className={styles.logout} onClick={() => router.push('/')}>
