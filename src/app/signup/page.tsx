@@ -90,7 +90,7 @@ export default function SignupPage() {
                     onChange={(e) => setConfirmpassword(e.target.value)}
                 />
                 <button type="submit" className={styles.button} disabled={loading}>
-                    {loading ? "Signing Up..." : "Sign Up"}
+                    {loading ? "登録中..." : "新規登録"}
                 </button>
                 <Link href="/login" className={styles.link}>すでにアカウントを持っている</Link>
             </form>
