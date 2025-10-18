@@ -34,20 +34,6 @@
     letter-spacing: 0.05em;
 }
 
-/* タブバー（いいね・フォロー・コメント） */
-.tabBar {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-
-    position: sticky; /* 上部に固定 */
-    top: 0;
-    background-color: #0b1522; /* Header と違和感ない色に */
-    padding: 0.5rem 0;
-    z-index: 10;
-}
-
-
 /* 通知リスト */
 .list {
     width: 100%;
@@ -70,6 +56,18 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+/* タブバー（いいね・フォロー・コメント） */
+.tabBar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    position: sticky; /* 上部に固定 */
+    top: 0;
+    background-color: #0b1522; /* Header と違和感ない色に */
+    padding: 0.5rem 0;
+    z-index: 10;
+}
 
 /* タブボタン */
 .tabBar button {
@@ -82,12 +80,18 @@
     transition: 0.2s;
 }
 
-.tabBar button:hover {
-    transform: translateX(5px);
-    box-shadow: 0 4px 20px rgba(0, 180, 255, 0.25);
+/* 選択中のタブは常に明るい色 */
+.tabBar button.activeTab {
+    background-color: rgba(0, 180, 255, 0.5); /* 明るいブルー */
+    color: #fff;
+    font-weight: bold;
 }
 
-/* 選択中のタブ */
+/* アクティブでないタブだけホバー時に明るく */
+.tabBar button:not(.activeTab):hover {
+    background-color: rgba(0, 180, 255, 0.2);
+}
+
 .activeTab {
     background-color: #00b4ff;
     color: #0b1522;
@@ -95,8 +99,24 @@
 }
 
 
+.item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 20px rgba(0, 180, 255, 0.25);
+}
 
+/* スクロールバー */
+.list::-webkit-scrollbar {
+    width: 8px;
+}
 
+.list::-webkit-scrollbar-thumb {
+    background: rgba(0, 180, 255, 0.5);
+    border-radius: 14px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: #0b0f14;
+}
 
 /* モバイル対応 */
 @media (max-width: 480px) {
