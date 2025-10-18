@@ -48,29 +48,90 @@ body {
     letter-spacing: 0.05em;
 }
 
-.profileCard {
+/* mypage.module.css */
+.container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: flex-start; /* 上寄せ */
+  min-height: 100vh;
+  padding: 5rem 1rem;
+  background: radial-gradient(ellipse at top, #0b0f14, #080c12 80%);
+  color: var(--text);
+  overflow-y: auto;
+  align-items: stretch; /* ← 追加：子要素の幅を伸ばす */
+}
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* プロフィールだけ中央寄せ */
+  gap: 1rem;
+}
+
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;       /* 横幅いっぱい */
+  max-width: none;  /* 投稿の最大幅 */
+  margin-top: 2rem;
+  align-items:stretch; /* 左寄せ */
+}
+
+
+.profileCard {
+  display: flex;
+  flex-direction: column; /* ← 横並びから縦並びに変更 */
+  align-items: center;    /* 中央寄せ */
+  gap: 1rem;              /* 各要素の間隔 */
   background: #121926;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   border-radius: 14px;
   box-shadow: 0 0 25px rgba(0, 180, 255, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+}
+
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 横方向の中央揃え */
+  text-align: center;
+  gap: 0.5rem; /* 各要素の間隔 */
 }
 
 .profileStats {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2列、幅均等 */
+  grid-template-rows: repeat(2, auto); /* 2行 */
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  max-width: 300px; /* 必要に応じて調整 */
 }
 
-.profileStats span {
-  font-size: 0.9rem;
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 中央揃え */
+  justify-content: center;
+  width: 100%; /* これで均等幅 */
+  text-align: center;
+}
+
+
+.statNumber {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.statLabel {
+  font-size: 0.8rem;
   color: #94a3b8;
 }
+
 
 .username {
   font-size: 1.5rem;
@@ -98,13 +159,6 @@ body {
     box-shadow: 0 0 12px rgba(0, 180, 255, 0.25);
 }
 
-.postsContainer {
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
 .postCard {
   background: var(--surface);
   padding: 1rem 1.5rem;
@@ -125,4 +179,25 @@ body {
 .postDate {
   font-size: 0.8rem;
   color: #94a3b8;
+}
+
+.profileImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%; /* 丸くする */
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.profileBio {
+  width: 100%;
+  max-width: 400px;
+  min-height: 80px;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #1a2030;
+  color: var(--text);
+  resize: vertical; /* 高さを自由に変更可能 */
+  font-size: 0.95rem;
 }
