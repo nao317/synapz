@@ -91,3 +91,43 @@
     align-self: center;
   }
   
+  @media (max-width: 480px) {
+    /* タイトル */
+    .title {
+      font-size: 2rem;
+      margin-bottom: 1.8rem;
+      text-align: center; /* 中央寄せにすると見やすい */
+    }
+  
+    /* コンテナ内の余白 */
+    .container {
+      padding: 20px 16px;
+    }
+  
+    /* プロフィールカードを縦並びに */
+    .profileCard {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+  
+    /* プロフィール画像サイズ調整 */
+    .profileIcon {
+      width: 80px;
+      height: 80px;
+    }
+  
+    /* 入力欄とボタンの幅調整 */
+    .input,
+    .textarea,
+    .button {
+      width: 100%;
+    }
+  
+    /* ボタン中央寄せ */
+    .button {
+      margin-top: 12px;
+      align-self: center;
+    }
+  }
+  
