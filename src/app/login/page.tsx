@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import styles from './login.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
 import { getSupabaseClient } from '@/lib/supabaseClient';
+import { testSupabaseClientSingleton, checkEnvironmentVariables } from '@/lib/supabaseClientTest';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -13,6 +14,15 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    
+    useEffect(() => {
+        // Development環境でのテスト実行
+        if (process.env.NODE_ENV === 'development') {
+            console.log('🔍 Supabaseクライアントのテストを実行中...');
+            checkEnvironmentVariables();
+            testSupabaseClientSingleton();
+        }
+    }, []);
     
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
