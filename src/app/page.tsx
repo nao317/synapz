@@ -30,8 +30,6 @@ export default function Home() {
   return (
     <div className={styles.pageRoot}>
       <HyperspaceBackground />
-
-      {/* ===== Hero (スクロールで移動するタイトル＋ボタン) ===== */}
       <motion.div
         className={styles.hero}
         style={{
@@ -64,8 +62,6 @@ export default function Home() {
             サインアップ
           </Button>
         </motion.div>
-
-        {/* スクロールヒントをHero内に配置 */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -75,8 +71,6 @@ export default function Home() {
           <ScrollHint />
         </motion.div>
       </motion.div>
-
-      {/* ===== Concept以下 ===== */}
       <main className={styles.contentWrapper}>
         <motion.section
           className={styles.conceptSection}

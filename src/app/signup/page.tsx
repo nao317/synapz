@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import styles from './signup.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
-export default function LoginPage() {
+export default function SignupPage() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,7 +13,7 @@ export default function LoginPage() {
     return (
         <div className={styles.container}>
             <TypewriterText>
-                <h1 className={styles.title}>Sign In</h1>
+                <h1 className={styles.title}>Sign Up</h1>
             </TypewriterText>
             <form className={styles.form}>
                 <input
@@ -45,7 +45,7 @@ export default function LoginPage() {
                     onChange={(e) => setConfirmpassword(e.target.value)}
                 />
                 <button type="submit" className={styles.button}>
-                    Sign In
+                    Sign Up
                 </button>
             </form>
         </div>
