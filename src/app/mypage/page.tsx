@@ -16,6 +16,12 @@ export default function MyPage() {
         </TypewriterText>
 
          <div className={styles.profileCard}>
+            <img
+            src="/profile-icon.png"
+            alt="ユーザーのプロフィール画像"
+            className={styles.profileIcon}
+            />
+            <div className={styles.profileInfo}>
          <div className={styles.username}>ユーザー名</div>
          <div className={styles.email}>email@example.com</div>
           <div className={styles.profileStats}>
@@ -24,6 +30,7 @@ export default function MyPage() {
           <span>ブックマーク: 78</span>
          </div>
          <button className={styles.button}>編集</button>      
+         </div>
          </div>
           <div className={styles.postsContainer}>
   <div className={styles.postCard}>
