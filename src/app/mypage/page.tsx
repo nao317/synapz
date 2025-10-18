@@ -7,8 +7,16 @@ import styles from './mypage.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
 import Header from '../../lib/components/Header';
 import { Button } from '../../lib/components/Button';
+import { useRouter } from 'next/navigation';
+
+
+
 
 export default function MyPage() {
+  const router = useRouter();
+  const goToEdit = () => {
+  router.push('/mypage_edit'); 
+};
  return (
 <div className={styles.dashboard}>
 <Header>
@@ -55,7 +63,8 @@ export default function MyPage() {
   </div>
 </div>
 
-         <Button>編集</Button>      
+         <Button onClick={goToEdit}>編集</Button>
+ 
          </div>
          </div>
          </div>
