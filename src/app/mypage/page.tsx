@@ -6,6 +6,7 @@ import styles from './mypage.module.css';
 import Header from '../../lib/components/Header';
 import { Button } from '../../lib/components/Button';
 import { useRouter } from 'next/navigation';
+import PostCard from '@/lib/components/PostCard';
 
 export default function MyPage() {
   const router = useRouter();
