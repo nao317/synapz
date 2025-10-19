@@ -3,7 +3,7 @@
   border-radius: var(--radius);
   padding: 1.5rem 1.75rem;
   margin-top: 0.2rem;
-  width: 100%;
+  width: 75%;
   box-shadow: 0 0 6px rgba(0, 180, 255, 0.15);
   transition: transform var(--transition), box-shadow var(--transition);
 }
@@ -40,4 +40,21 @@
   color: var(--text);
   line-height: 1.6;
   white-space: pre-wrap;
+}
+
+.likebutton{
+    background-color: transparent;
+    border: none;
+}
+
+.footer {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--mutedText);
+  text-align: right;
+}
+.likecount {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-left: 0.5rem;
 }
