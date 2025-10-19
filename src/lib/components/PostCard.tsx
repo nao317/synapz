@@ -10,7 +10,7 @@ type PostCardProps = {
     content: string;
 };
 
-const Default_user_icon = "/defaulticon.png";
+const Default_user_icon = "/defaultIcon.png";
 
 export default function PostCard({ userIconUrl, username, content }: PostCardProps) {
 
