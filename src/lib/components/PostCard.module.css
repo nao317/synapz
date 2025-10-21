@@ -41,3 +41,20 @@
   line-height: 1.6;
   white-space: pre-wrap;
 }
+
+.likebutton{
+    background-color: transparent;
+    border: none;
+}
+
+.footer {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--mutedText);
+  text-align: right;
+}
+.likecount {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-left: 0.5rem;
+}
