@@ -6,6 +6,7 @@ import styles from './mypage.module.css';
 import Header from '../../lib/components/Header';
 import { Button } from '../../lib/components/Button';
 import { useRouter } from 'next/navigation';
+import PostCard from '@/lib/components/PostCard';
 
 export default function MyPage() {
   const router = useRouter();
@@ -53,16 +54,6 @@ export default function MyPage() {
           </div>
         </div>
         <div className={styles.postsContainer}>
-          <div className={styles.postCard}>
-            <h3>投稿タイトル</h3>
-            <p>投稿の本文</p>
-            <div className={styles.postDate}>2025/10/18</div>
-          </div>
-          <div className={styles.postCard}>
-            <h3>別の投稿</h3>
-            <p>本文...</p>
-            <div className={styles.postDate}>2025/10/17</div>
-          </div>
         </div>
       </div>
     </div>
