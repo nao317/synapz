@@ -15,11 +15,7 @@ export default function MyPage() {
   };
   return (
     <div className={styles.dashboard}>
-      <Header>
-
-      </Header>
-
-
+      <Header></Header>
       <div className={styles.container}>
         <div className={styles.profileSection}>
           <div className={styles.profileCard}>
@@ -53,30 +49,11 @@ export default function MyPage() {
                   <div className={styles.statLabel}>投稿</div>
                 </div>
               </div>
-
               <Button onClick={goToEdit}>編集</Button>
-
             </div>
           </div>
         </div>
         <div className={styles.postsContainer}>
-         <PostCard
-  postId="1"
-  userIconUrl="/user1.png"
-  username="テストユーザー"
-  content="テスト"
-  initialIsLiked={false}
-  initialLikeCount={0}
-/>
-
-<PostCard
-  postId="2"
-  userIconUrl="/user1.png"
-  username="テストユーザー"
-  content="テスト"
-  initialIsLiked={false}
-  initialLikeCount={0}
-/>
         </div>
       </div>
     </div>
