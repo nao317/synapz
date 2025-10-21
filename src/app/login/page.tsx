@@ -5,10 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './login.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
-import { getSupabaseClient } from '@/lib/supabaseClient';
 import Link from 'next/link';
-import { testSupabaseClientSingleton, checkEnvironmentVariables } from '@/lib/supabaseClientTest';
-
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState('');
@@ -20,37 +17,11 @@ export default function LoginPage() {
         // Development環境でのテスト実行
         if (process.env.NODE_ENV === 'development') {
             console.log('Supabaseクライアントのテストを実行中...');
-            checkEnvironmentVariables();
-            testSupabaseClientSingleton();
         }
     }, []);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        const supabase = getSupabaseClient();
-        if (!supabase) {
-            setError('Supabaseクライアントが初期化されていません');
-            return;
-        }
-
-        setLoading(true);
-        setError(null);
-
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-
-        setLoading(false);
-
-        if (error) {
-            console.error(error);
-            setError("ログイン失敗: " + error.message);
-        } else if (data?.session) {
-            // ログイン成功時にdashboardにリダイレクト
-            router.push("/dashboard");
-        }
     };
 
     return (
