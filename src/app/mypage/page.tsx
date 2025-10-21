@@ -1,16 +1,11 @@
 "use client";
 
 // mypage.tsx
-import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from './mypage.module.css';
-import TypewriterText from '../../lib/components/TypewriterText';
 import Header from '../../lib/components/Header';
 import { Button } from '../../lib/components/Button';
 import { useRouter } from 'next/navigation';
-
-
-
 
 export default function MyPage() {
   const router = useRouter();
@@ -25,12 +20,7 @@ export default function MyPage() {
 
 
       <div className={styles.container}>
-
         <div className={styles.profileSection}>
-          <TypewriterText>
-            <h1 className={styles.title}>My Page</h1>
-          </TypewriterText>
-
           <div className={styles.profileCard}>
             <Image
               src="/profile-icon.png"
