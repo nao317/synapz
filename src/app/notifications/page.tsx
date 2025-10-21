@@ -46,7 +46,7 @@ const notifications: Notification[] = [
 
 export default function Notifications() {
     const [activeTab, setActiveTab] = useState<'like' | 'follow' | 'comment'>('like');
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
         <div className={styles.notificationsPage}>
@@ -72,7 +72,7 @@ export default function Notifications() {
                     ))}
                 </div>
 
-                
+
                 <ul className={styles.list}>
                     {notifications
                         .filter((note) => note.type === activeTab)

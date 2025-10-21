@@ -1,11 +1,11 @@
 "use client";
 
-// signup.tsx
 import React, { useState } from 'react';
 import Link from 'next/link';
 import styles from './signup.module.css';
 import TypewriterText from '../../lib/components/TypewriterText';
 import { getSupabaseClient } from '@/lib/supabaseClient';
+
 export default function SignupPage() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -35,19 +35,20 @@ export default function SignupPage() {
             email,
             password,
             options: {
-                data: { username }, // ← Supabaseユーザーにカスタムデータとして登録できる
+                data: { username },
             },
         });
-
-        setLoading(false);
 
         if (error) {
             console.error(error);
             setError("登録失敗: " + error.message);
-        } else {
-            alert("アカウントが登録されました！　メールから認証を完了してください！");
-            window.location.href = "/login";
+            setLoading(false);
+            return;
         }
+        
+        setLoading(false);
+        alert("アカウントが登録されました！ メールから認証を完了してください！");
+        window.location.href = "/login";
     };
 
     return (
@@ -55,14 +56,10 @@ export default function SignupPage() {
             <TypewriterText>
                 <h1 className={styles.title}>Sign Up</h1>
             </TypewriterText>
-            {error && (
-                <div className={styles.error}>
-                    {error}
-                </div>
-            )}
+            {error && <div className={styles.error}>{error}</div>}
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input
-                    type="name"
+                    type="text"
                     placeholder="Username"
                     className={styles.input}
                     value={username}
@@ -92,7 +89,9 @@ export default function SignupPage() {
                 <button type="submit" className={styles.button} disabled={loading}>
                     {loading ? "登録中..." : "新規登録"}
                 </button>
-                <Link href="/login" className={styles.link}>すでにアカウントを持っている</Link>
+                <Link href="/login" className={styles.link}>
+                    すでにアカウントを持っている
+                </Link>
             </form>
         </div>
     );
