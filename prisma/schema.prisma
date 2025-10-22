@@ -16,6 +16,7 @@ model User {
   created_at DateTime? @default(now()) @db.Timestamp(6)
 
   posts      Post[]
+  likes      Like[]
 }
 
 model Post {
@@ -33,9 +34,9 @@ model Like {
   postId     String    @db.Uuid
 
   user       User      @relation(fields: [userId], references: [id])
-  post       Post      @relation(fields: [userId], references: [id])
+  post       Post      @relation(fields: [postId], references: [id])
 
-  created_at DataTime  @default(now()) @db.Timestamp(6)
+  created_at DateTime  @default(now()) @db.Timestamp(6)
   
   @@unique([userId, postId])
 }
