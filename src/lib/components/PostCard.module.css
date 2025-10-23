@@ -1,0 +1,60 @@
+.postCard {
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-top: 0.2rem;
+  width: 100%;
+  box-shadow: 0 0 6px rgba(0, 180, 255, 0.15);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.postCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px rgba(0, 180, 255, 0.25);;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.userIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999%;
+  object-fit: cover;
+  margin-right: 1rem;
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 6px rgba(0, 180, 255, 0.2);;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.content {
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.likebutton{
+    background-color: transparent;
+    border: none;
+}
+
+.footer {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--mutedText);
+  text-align: right;
+}
+.likecount {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-left: 0.5rem;
+}
