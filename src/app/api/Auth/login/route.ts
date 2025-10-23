@@ -8,11 +8,11 @@ import { cookies } from 'next/headers';
 // RouteHandlerClient
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 
-export async function POST (request: Request) {
+export async function POST(request: Request) {
     const { email, password } = await request.json();
 
     // Component/Route Handlerでsupabaseを使うための文言
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = createRouteHandlerClient({ cookies: () => cookies() });
 
     const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -24,5 +24,5 @@ export async function POST (request: Request) {
         return NextResponse.json({ error: error.message }, { status: 401 });
     }
 
-    return NextResponse.json({ message: 'You Logged In'}, { status: 200 });
+    return NextResponse.json({ message: 'You Logged In' }, { status: 200 });
 }

@@ -1,7 +1,5 @@
 "use client";
 
-// mypage.tsx
-
 // UI components
 import Image from 'next/image';
 import styles from './mypage.module.css';
@@ -11,17 +9,16 @@ import { Button } from '../../lib/components/Button';
 // Routing
 import { useRouter } from 'next/navigation';
 
-// react系のライブラリ useEffectとか
+// react系
 import React, { useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { User } from 'lucide-react';
 
-type User = {
+type UserType = {
   name: string;
   email: string;
   profile: string;
-  avatar_url: string;
-}
+  avatarurl: string;
+};
 
 export default function MyPage() {
   const supabase = createClientComponentClient();
@@ -30,41 +27,37 @@ export default function MyPage() {
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
   const [editing, setEditing] = useState(false);
   const [username, setUsername] = useState('');
   const [profile, setProfile] = useState('');
-  const [avatar, setAvatar] = useState<string | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatar_preview, setAvatar_preview] = useState('');
 
-  // useEffect()
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-
-        // ログインしているかどうかを確認
         const { data: { user }, error: authError } = await supabase.auth.getUser();
         if (authError) throw authError;
         if (!user) {
           router.push('/login');
           return;
         }
-        const userId = user.id;
-        const response = await fetch(`/api/users/${userId}`, { cache: 'no-store' });
+
+        const response = await fetch(`/api/users/${user.id}`, { cache: 'no-store' });
         if (!response.ok) {
           const text = await response.text().catch(() => '');
           throw new Error(`Failed to fetch profile: ${response.status} ${text}`);
         }
 
-        const data: User = await response.json();
-
+        const data: UserType = await response.json();
         setUser(data);
         setUsername(data.name || '');
         setProfile(data.profile || '');
-        setAvatar_preview(data.avatar_url || '');
+        setAvatar_preview(data.avatarurl || '');
       } catch (e) {
         console.error('Profile fetch error:', e);
         setError('ユーザープロフィールの取得に失敗');
@@ -76,70 +69,41 @@ export default function MyPage() {
     fetchProfile();
   }, [router, supabase.auth]);
 
-  const compressImage = (file: File, maxWidth: number, maxHeight: number, quality: number): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = document.createElement('img');
-        img.onload = (e) => {
-          const canvas = document.createElement('canvas');
-          let { width, height } = img;
+  // Supabase Storage にアップロード
+  const uploadAvatar = async (file: File, userId: string) => {
+    const ext = file.name.split('.').pop();
+    const filePath = `avatars/${userId}.${ext}`; // バケット内のパス
 
-          if (width > height) {
-            if (width > maxWidth) {
-              height *= maxWidth / width;
-              width = maxWidth;
-            }
-          } else {
-            if (height > maxHeight) {
-              width *= maxHeight / height;
-              height = maxHeight;
-            }
-          }
+    // ← バケット名を Images に変更
+    const { data, error } = await supabase.storage
+      .from('images')   // ここを 'Images' に変更
+      .upload(filePath, file, { upsert: true });
+    if (error) throw error;
 
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx?.drawImage(img, 0, 0, width, height);
-
-          const base64 = canvas.toDataURL('image/jpeg', quality);
-          resolve(base64);
-        };
-        img.onerror = reject;
-        img.src = e.target?.result as string;
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
+    const { data: urlData } = supabase.storage.from('images').getPublicUrl(filePath); // ここも
+    return urlData.publicUrl;
   };
 
-  const handler_avatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handler_avatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
     if (!file) return;
 
     if (file.size > 500_000) {
-      setError('画像サイズは500KB以下に圧縮してください');
+      setError('画像サイズは500KB以下にしてください');
       e.target.value = '';
       return;
     }
 
-    try {
-      const previewUrl = URL.createObjectURL(file);
-      setAvatar_preview(previewUrl);
-
-      const compressedBase64 = await compressImage(file, 256, 256, 0.8);
-      setAvatar(compressedBase64);
-      setError('');
-    } catch (err) {
-      console.error('Image compression error:', err);
-      setError('画像の設定に失敗しました');
-    }
+    const previewUrl = URL.createObjectURL(file);
+    setAvatar_preview(previewUrl);
+    setAvatarFile(file);
+    setError('');
   };
 
   const handler_submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('まだ認証されていません。');
@@ -147,81 +111,60 @@ export default function MyPage() {
       const formData = new FormData();
       formData.append('name', username || '');
       formData.append('profile', profile);
-      if (avatar) formData.append('avatar', avatar);
 
-      const userId = user.id;
-      const response = await fetch(`/api/users/${userId}`, {
+      // アバターが選択されている場合
+      if (avatar_preview) {
+        // Blob に変換
+        const blob = await fetch(avatar_preview).then(res => res.blob());
+
+        // Storage にアップロード
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('images')
+          .upload(`avatars/${user.id}.png`, blob, { contentType: blob.type, upsert: true });
+
+        if (uploadError) throw uploadError;
+
+        // 公開 URL を取得して API に送る
+        const url = supabase.storage.from('images').getPublicUrl(`avatars/${user.id}.png`).data.publicUrl;
+        formData.append('avatar_url', url);
+      }
+
+      // API に送信
+      const response = await fetch(`/api/users/${user.id}`, {
         method: 'POST',
         body: formData,
       });
 
-      if (!response.ok) {
-        const text = await response.text().catch(() => '');
-        throw new Error(`プロフィールの更新に失敗: ${response.status} ${text}`);
-      }
+      if (!response.ok) throw new Error('プロフィールの更新に失敗');
 
-      // ここを修正：レスポンス全体を確認
       const data = await response.json();
-      const updatedData: User = data.user ?? data; // user がなければ data を直接使う
+      const updatedData = data.user ?? data;
 
       setUser(updatedData);
       setUsername(updatedData.name || '');
       setProfile(updatedData.profile || '');
-      setAvatar_preview(updatedData.avatar_url || '');
-      setAvatar(null);
+      // UserType に合わせる
+      setAvatar_preview(updatedData.avatarurl || updatedData.avatar_url || '');
+      setAvatarFile(null);
       setEditing(false);
+
     } catch (e) {
       console.error('Update error:', e);
       setError(e instanceof Error ? e.message : 'プロフィールの更新に失敗しました');
     }
   };
 
-
-  if (!mounted) return null;
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-[#0a0a0f] to-[#1a1a2e]">
-        <div
-          className="relative h-12 w-12 animate-spin rounded-full border-4 border-transparent"
-          style={{
-            borderTopColor: '#00ffff',
-            boxShadow: '0 0 15px #00ffff, 0 0 30px #0088ff, 0 0 45px #0044ff',
-          }}
-        />
-      </div>
-    );
-  }
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-[#0a0a0f] to-[#1a1a2e]">
-        <div
-          className="max-w-md mx-auto p-6 rounded-2xl text-center text-red-400 font-semibold tracking-wide"
-          style={{
-            background: 'rgba(30, 0, 0, 0.4)',
-            border: '1px solid rgba(255, 0, 80, 0.4)',
-            boxShadow:
-              '0 0 10px rgba(255, 0, 80, 0.6), 0 0 20px rgba(255, 0, 80, 0.4), inset 0 0 10px rgba(255, 0, 80, 0.2)',
-            textShadow: '0 0 8px rgba(255, 0, 100, 0.6)',
-          }}
-        >
-          {error}
-        </div>
-      </div>
-    );
-  }
-
-
+  if (error) return <div className="text-red-400">{error}</div>;
   if (!user) return null;
-
 
   return (
     <div className={styles.dashboard}>
-      <Header></Header>
+      <Header />
       <div className={styles.container}>
         <div className={styles.profileSection}>
           <div className={styles.profileCard}>
             <Image
-              src={avatar_preview || '/profile-icon.png'}
+              src={avatar_preview || '/defaultIcon.png'}
               alt="ユーザーのプロフィール画像"
               width={100}
               height={100}
@@ -232,32 +175,15 @@ export default function MyPage() {
               <div className={styles.email}>{user.email}</div>
               <div className={styles.plofileBio}>{user.profile}</div>
 
-              <div className={styles.profileStats}>
-                <div className={styles.statCard}>
-                  <div className={styles.statNumber}>0</div>
-                  <div className={styles.statLabel}>フォロー</div>
-                </div>
-                <div className={styles.statCard}>
-                  <div className={styles.statNumber}>0</div>
-                  <div className={styles.statLabel}>フォロワー</div>
-                </div>
-                <div className={styles.statCard}>
-                  <div className={styles.statNumber}>0</div>
-                  <div className={styles.statLabel}>ブックマーク</div>
-                </div>
-                <div className={styles.statCard}>
-                  <div className={styles.statNumber}>0</div>
-                  <div className={styles.statLabel}>投稿</div>
-                </div>
-              </div>
               {!editing && (
                 <Button
                   onClick={() => {
                     setEditing(true);
                     setUsername(user.name);
                     setProfile(user.profile);
-                    setAvatar(null);
-                  }}>
+                    setAvatarFile(null);
+                  }}
+                >
                   編集
                 </Button>
               )}
@@ -266,18 +192,18 @@ export default function MyPage() {
                   <label className={styles.editLabel}>ユーザー名</label>
                   <input
                     type="text"
-                    value={username ?? ''}
+                    value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     className={styles.editInput}
                   />
-
                   <label className={styles.editLabel}>自己紹介</label>
                   <textarea
                     value={profile}
                     onChange={(e) => setProfile(e.target.value)}
                     className={styles.editTextarea}
                   />
-
+                  <label className={styles.editLabel}>プロフィール画像</label>
+                  <input type="file" accept="image/*" onChange={handler_avatarChange} />
                   <div className={styles.editButtons}>
                     <Button type="submit">保存</Button>
                     <Button onClick={() => setEditing(false)}>キャンセル</Button>
@@ -286,10 +212,6 @@ export default function MyPage() {
               )}
             </div>
           </div>
-        </div>
-
-        <div className={styles.postsContainer}>
-          <h2 className={styles.sectionTitle}>あなたの投稿</h2>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styles from "./TimeLine.module.css";
 import PostCard from "./PostCard";
 
