@@ -21,18 +21,35 @@ export async function GET() {
         if (!user) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
+
         const dbUser = await prisma.user.findUnique({
             where: { id: user.id },
-            select: { name: true }
+            select: {
+                name: true,
+                profile: true,
+                email: true,
+                avatarurl: true, // Prismaのカラム名に合わせる
+            },
         });
 
-        return NextResponse.json({ user: dbUser });
+        if (!dbUser) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        }
+
+        // フロントで使うキー名に変換
+        const result = {
+            name: dbUser.name ?? '',
+            profile: dbUser.profile ?? '',
+            avatar_url: dbUser.avatarurl ?? '',
+            email: dbUser.email ?? '',
+        };
+
+        return NextResponse.json(result);
     } catch (error) {
         console.error(error);
         return NextResponse.json({ error: 'Failed to fetch user data' }, { status: 500 });
     }
 }
-
 export async function POST(request: Request) {
     const supabase = createRouteHandlerClient({ cookies });
     try {
