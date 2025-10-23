@@ -36,7 +36,6 @@ export default function TimeLine() {
             {posts.map((post) => (
                 <PostCard
                     key={post.id}
-                    postId={post.id}
                     userIconUrl={post.avatar_url}
                     username={post.username}
                     content={post.content}
