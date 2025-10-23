@@ -4,15 +4,29 @@
 // サーバー処理用
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-
-// RouteHandlerClient
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { type CookieOptions, createServerClient } from '@supabase/ssr';
 
 export async function POST(request: Request) {
     const { email, password } = await request.json();
+    const cookieStore = await cookies();
 
-    // Component/Route Handlerでsupabaseを使うための文言
-    const supabase = createRouteHandlerClient({ cookies: () => cookies() });
+    const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+            cookies: {
+                get(name: string) {
+                    return cookieStore.get(name)?.value
+                },
+                set(name: string, value: string, options: CookieOptions) {
+                    cookieStore.set({ name, value, ...options })
+                },
+                remove(name: string, options: CookieOptions) {
+                    cookieStore.set({ name, value: '', ...options })
+                },
+            },
+        }
+    )
 
     const { error } = await supabase.auth.signInWithPassword({
         email,

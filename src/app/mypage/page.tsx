@@ -6,7 +6,7 @@ import Header from "../../lib/components/Header";
 import { Button } from "../../lib/components/Button";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createBrowserClient } from "@supabase/ssr";
 
 type UserType = {
   name: string;
@@ -16,7 +16,12 @@ type UserType = {
 };
 
 export default function MyPage() {
-  const supabase = createClientComponentClient();
+  const [supabase] = useState(() =>
+    createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+  );
   const router = useRouter();
 
   const [mounted, setMounted] = useState(false);

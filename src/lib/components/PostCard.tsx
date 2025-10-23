@@ -6,7 +6,6 @@ import Image from "next/image";
 import { ThumbsUp } from "lucide-react";
 
 type PostCardProps = {
-    postId: string;
     userIconUrl: string | null | undefined;
     username: string;
     content: string;
@@ -17,7 +16,6 @@ type PostCardProps = {
 const Default_user_icon = "/defaultIcon.png";
 
 export default function PostCard({
-    postId,
     userIconUrl,
     username,
     content,
