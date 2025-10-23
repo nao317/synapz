@@ -33,7 +33,7 @@ export default function MyPage() {
   const [user, setUser] = useState<User | null>(null);
   const [editing, setEditing] = useState(false);
   const [username, setUsername] = useState('');
-  const [profile, setProfile] = useState('自己紹介文を書こう！');
+  const [profile, setProfile] = useState('');
   const [avatar, setAvatar] = useState<string | null>(null);
   const [avatar_preview, setAvatar_preview] = useState('');
 
@@ -143,23 +143,39 @@ export default function MyPage() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('まだ認証されていません。');
+
       const formData = new FormData();
-      formData.append('username', username);
+      formData.append('name', username || '');
       formData.append('profile', profile);
       if (avatar) formData.append('avatar', avatar);
-      const userId = user.id;
-      const response = await fetch(`/api/users/${userId}`, { method: 'POST', body: formData });
-      if (!response.ok) throw new Error('プロフィールの更新に失敗しました');
 
-      const updated: User = await response.json();
-      setUser(updated);
-      setEditing(false);
+      const userId = user.id;
+      const response = await fetch(`/api/users/${userId}`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const text = await response.text().catch(() => '');
+        throw new Error(`プロフィールの更新に失敗: ${response.status} ${text}`);
+      }
+
+      // ここを修正：レスポンス全体を確認
+      const data = await response.json();
+      const updatedData: User = data.user ?? data; // user がなければ data を直接使う
+
+      setUser(updatedData);
+      setUsername(updatedData.name || '');
+      setProfile(updatedData.profile || '');
+      setAvatar_preview(updatedData.avatar_url || '');
       setAvatar(null);
+      setEditing(false);
     } catch (e) {
       console.error('Update error:', e);
       setError(e instanceof Error ? e.message : 'プロフィールの更新に失敗しました');
     }
   };
+
 
   if (!mounted) return null;
   if (loading) {
@@ -250,7 +266,7 @@ export default function MyPage() {
                   <label className={styles.editLabel}>ユーザー名</label>
                   <input
                     type="text"
-                    value={username}
+                    value={username ?? ''}
                     onChange={(e) => setUsername(e.target.value)}
                     className={styles.editInput}
                   />
