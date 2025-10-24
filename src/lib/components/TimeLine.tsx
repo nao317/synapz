@@ -6,6 +6,16 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { createBrowserClient } from "@supabase/ssr";
 
+type TimeLinePost = {
+    id: string;
+    content: string;
+    created_at: string;
+    user: {
+        id: string;
+        name: string | null;
+        avatarurl: string | null;
+    };
+};
 
 export default function TimeLine() {
     const [supabase] = useState(() =>
@@ -16,18 +26,18 @@ export default function TimeLine() {
     );
     const router = useRouter();
 
-    const [posts, setPosts] = useState<any[]>([]);
+    const [posts, setPosts] = useState<TimeLinePost[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        const fetchPosets = async  () => {
+        const fetchPosets = async () => {
             setLoading(true);
             try {
                 const {
                     data: { user },
                 } = await supabase.auth.getUser();
-                
+
                 if (!user) {
                     router.push("/login");
                     return;
@@ -43,10 +53,11 @@ export default function TimeLine() {
                 const data = await response.json();
 
                 setPosts(data);
-            } catch (err: any) {
-                setError(err.message);
+            } catch (e) {
+                console.error('Failed to fetch posts', e);
+                setError("投稿の取得に失敗しました");
             } finally {
-                setLoading(false);  
+                setLoading(false);
             }
         };
         fetchPosets();
@@ -73,8 +84,8 @@ export default function TimeLine() {
             {posts.map((post) => (
                 <PostCard
                     key={post.id}
-                    userIconUrl={post.avatarurl ?? "/defaultIcon.png"}
-                    username={post.username ?? "Unknown"}
+                    userIconUrl={post.user.avatarurl ?? "/defaultIcon.png"}
+                    username={post.user.name ?? "Unknown"}
                     content={post.content}
                     initialIsLiked={false}
                     initialLikeCount={0}
