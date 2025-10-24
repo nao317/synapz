@@ -50,10 +50,11 @@
 .item {
     background: #121926;
     padding: 1rem 1.5rem;
+    border: 1px solid rgba(0, 180, 255, 0.2);
     border-radius: 14px;
     box-shadow: 0 2px 12px rgba(0, 180, 255, 0.1);
     font-size: 1rem;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 /* タブバー（いいね・フォロー・コメント） */
@@ -73,11 +74,11 @@
 .tabBar button {
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    border: none;
+    border: 1px solid rgba(0, 180, 255, 0.25); ;
     background-color: #121926;
     color: #e6f7ff;
     cursor: pointer;
-    transition: 0.2s;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
 }
 
 /* 選択中のタブは常に明るい色 */
@@ -85,11 +86,13 @@
     background-color: rgba(0, 180, 255, 0.5); /* 明るいブルー */
     color: #fff;
     font-weight: bold;
+    border-color: rgba(0, 180, 255, 0.8);
 }
 
 /* アクティブでないタブだけホバー時に明るく */
 .tabBar button:not(.activeTab):hover {
     background-color: rgba(0, 180, 255, 0.2);
+    border-color: rgba(0, 180, 255, 0.4);
 }
 
 .activeTab {
@@ -102,6 +105,7 @@
 .item:hover {
     transform: translateX(5px);
     box-shadow: 0 4px 20px rgba(0, 180, 255, 0.25);
+    border-color: rgba(0, 180, 255, 0.4);
 }
 
 /* スクロールバー */
