@@ -3,14 +3,17 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { prisma } from '@/lib/prisma';
 import { type CookieOptions, createServerClient } from '@supabase/ssr';
-import { supabase } from '@/lib/supabase';
 
-export async function GET(
+export async function GET (
     req: Request,
-    context: { params: Promise<{id: string}> }
 ) {
     try {
-        const { id } = await context.params;
+        const { searchParams } = new URL(req.url);
+        const id = searchParams.get('id');
+        if (!id) {
+            return NextResponse.json({ error: 'Post ID is required' }, { status: 400 });
+        }
+
         const cookieStore = await cookies();
 
         const supabase = createServerClient(
