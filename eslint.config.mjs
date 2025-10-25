@@ -18,6 +18,9 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "src/generated/**",
+      'react/no-unescaped-entities',
+      '@next/next/no-page-custom-font',
     ],
   },
 ];

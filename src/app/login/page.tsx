@@ -1,56 +1,45 @@
 "use client";
 
 // login.tsx
-import React, { useState, useEffect } from 'react';
+
+// 入力された情報の保持
+import { useState } from 'react';
+
+// ルーティング
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
+// CSS
 import styles from './login.module.css';
+
+// animation - react motion
 import TypewriterText from '../../lib/components/TypewriterText';
-import { getSupabaseClient } from '@/lib/supabaseClient';
-import  Link  from 'next/link';
-import { testSupabaseClientSingleton, checkEnvironmentVariables } from '@/lib/supabaseClientTest';
-import { style } from 'framer-motion/client';
 
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    
-    useEffect(() => {
-        // Development環境でのテスト実行
-        if (process.env.NODE_ENV === 'development') {
-            console.log('🔍 Supabaseクライアントのテストを実行中...');
-            checkEnvironmentVariables();
-            testSupabaseClientSingleton();
-        }
-    }, []);
-    
+    const [error, setError] = useState('');
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        
-        const supabase = getSupabaseClient();
-        if (!supabase) {
-            setError('Supabaseクライアントが初期化されていません');
-            return;
-        }
-        
-        setLoading(true);
-        setError(null);
+        setError('');
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
+        // api/login
+        const response = await fetch('/api/Auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password }),
         });
-
-        setLoading(false);
-
-        if (error) {
-            console.error(error);
-            setError("ログイン失敗: " + error.message);
-        } else if (data?.session) {
-            // ログイン成功時にdashboardにリダイレクト
-            router.push("/dashboard");
+        
+        if (response.ok) {
+            router.push('/dashboard');
+            router.refresh();
+        } else {
+            const data = await response.json();
+            setError(data.error || 'ログインに失敗');
         }
     };
 
@@ -59,11 +48,6 @@ export default function LoginPage() {
             <TypewriterText>
                 <h1 className={styles.title}>Log In</h1>
             </TypewriterText>
-            {error && (
-                <div className={styles.error}>
-                    {error}
-                </div>
-            )}
             <form className={styles.form} onSubmit={handleLogin}>
                 <input
                     type="email"
@@ -79,11 +63,10 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit" className={styles.button} disabled={loading}>
-                    {loading ? "ログイン中..." : "ログイン"}
-                </button>
+                <button type="submit" className={styles.button}>ログイン</button>
                 <Link href="/signup" className={styles.link}>まだアカウントを持っていない</Link>
             </form>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 }

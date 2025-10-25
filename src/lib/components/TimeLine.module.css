@@ -1,0 +1,28 @@
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.nav {
+    display: flex;
+    gap: 8rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+.ceparate {
+    color: var(--accent);
+}

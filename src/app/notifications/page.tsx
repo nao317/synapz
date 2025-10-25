@@ -12,41 +12,12 @@ type Notification = {
 
 const notifications: Notification[] = [
     { type: 'like', text: 'ユーザーAがあなたの投稿にいいねしました' },
-    { type: 'follow', text: 'ユーザーBがあなたをフォローしました' },
-    { type: 'comment', text: 'ユーザーCがコメントしました' },
-    { type: 'like', text: 'ユーザーDがあなたの投稿にいいねしました' },
-    { type: 'follow', text: 'ユーザーEがあなたをフォローしました' },
-    { type: 'comment', text: 'ユーザーFがコメントしました' },
-    { type: 'like', text: 'ユーザーGがあなたの投稿にいいねしました' },
-    { type: 'follow', text: 'ユーザーHがあなたをフォローしました' },
-    { type: 'comment', text: 'ユーザーIがコメントしました' },
-    { type: 'like', text: 'ユーザーJがあなたの投稿にいいねしました' },
-    { type: 'like', text: 'ユーザーAがあなたの投稿にいいねしました' },
-    { type: 'follow', text: 'ユーザーBがあなたをフォローしました' },
-    { type: 'comment', text: 'ユーザーCがコメントしました' },
-    { type: 'like', text: 'ユーザーDがあなたの投稿にいいねしました' },
-    { type: 'follow', text: 'ユーザーEがあなたをフォローしました' },
-    { type: 'comment', text: 'ユーザーFがコメントしました' },
-    { type: 'like', text: 'ユーザーGがあなたの投稿にいいねしました' },
-    { type: 'follow', text: 'ユーザーHがあなたをフォローしました' },
-    { type: 'comment', text: 'ユーザーIがコメントしました' },
-    { type: 'like', text: 'ユーザーJがあなたの投稿にいいねしました' },
-    { type: 'like', text: 'ユーザーAがあなたの投稿にいいねしました' },
-    { type: 'follow', text: 'ユーザーBがあなたをフォローしました' },
-    { type: 'comment', text: 'ユーザーCがコメントしました' },
-    { type: 'like', text: 'ユーザーDがあなたの投稿にいいねしました' },
-    { type: 'follow', text: 'ユーザーEがあなたをフォローしました' },
-    { type: 'comment', text: 'ユーザーFがコメントしました' },
-    { type: 'like', text: 'ユーザーGがあなたの投稿にいいねしました' },
-    { type: 'follow', text: 'ユーザーHがあなたをフォローしました' },
-    { type: 'comment', text: 'ユーザーIがコメントしました' },
-    { type: 'like', text: 'ユーザーJがあなたの投稿にいいねしました' },
 ];
 
 
 export default function Notifications() {
     const [activeTab, setActiveTab] = useState<'like' | 'follow' | 'comment'>('like');
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
         <div className={styles.notificationsPage}>
@@ -72,7 +43,7 @@ export default function Notifications() {
                     ))}
                 </div>
 
-                
+
                 <ul className={styles.list}>
                     {notifications
                         .filter((note) => note.type === activeTab)
