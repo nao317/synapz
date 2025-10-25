@@ -58,7 +58,7 @@ async function GET(
     } catch (error) {
         console.error('GET /api/posts/[id] error', error);
         return NextResponse.json(
-            { error: 'Falied to fetch post data' },
+            { error: 'Failed to fetch post data' },
             { status: 500 }
         );
     }
