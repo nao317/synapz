@@ -218,7 +218,7 @@ export async function DELETE(
     } catch (error) {
         console.error('DELETE /api/users/[id] error', error);
         return NextResponse.json(
-            { error: 'Failed to fetch user data' },
+            { error: 'Failed to delete user data' },
             { status: 500 }
         );
     }
