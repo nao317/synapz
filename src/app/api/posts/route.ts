@@ -4,17 +4,38 @@ import { cookies } from 'next/headers';
 import { prisma } from '@/lib/prisma';
 import { type CookieOptions, createServerClient } from '@supabase/ssr';
 
-export async function GET (
-    req: Request,
-) {
+// 投稿一覧を取得
+export async function GET() {
     try {
-        const { searchParams } = new URL(req.url);
-        const id = searchParams.get('id');
-        if (!id) {
-            return NextResponse.json({ error: 'Post ID is required' }, { status: 400 });
-        }
 
-        const cookieStore = await cookies();
+        const dbPost = await prisma.post.findMany({
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        avatarurl: true,
+                    },
+                },
+            },
+            orderBy: { created_at: 'desc' },
+        });
+
+        return NextResponse.json(dbPost, { status: 200 });
+    }
+    catch (error) {
+        console.error('GET /api/posts error', error);
+        return NextResponse.json(
+            { error: 'Internal Server Error' },
+            { status: 500 }
+        );
+    }
+}
+
+// 投稿新規作成
+export async function POST(req: Request) {
+    try {
+        const cookieStore = cookies()
 
         const supabase = createServerClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -36,36 +57,28 @@ export async function GET (
 
         const {
             data: { user },
-        } = await supabase.auth.getUser();
+            error,
+        } = await supabase.auth.getUser()
 
-        if (!user) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        if (error || !user) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-        const dbPost = await prisma.post.findUnique({
-            where: { id },
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        name: true,
-                        avatarurl: true,
-                    },
-                },
+        const { content } = await req.json()
+
+        if (!content) {
+            return NextResponse.json({ error: 'Missing content' }, { status: 400 })
+        }
+
+        const newPost = await prisma.post.create({
+            data: {
+                content,
+                userId: user.id,
             },
-        });
-
-        if (!dbPost) {
-            return NextResponse.json({ error: 'Post not found' }, { status: 404 });
-        }
-
-        return NextResponse.json(dbPost, { status: 200 });
-    }
-    catch (error) {
-        console.error('GET /api/posts error', error);
-        return NextResponse.json(
-            { error: 'Internal Server Error' },
-            { status: 500 }
-        );
+        })
+        return NextResponse.json(newPost, { status: 201 })
+    } catch (error) {
+        console.error('POST /api/post error', error)
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 }
