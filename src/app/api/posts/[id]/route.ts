@@ -30,7 +30,7 @@ function createSupabaseClient() {
 
 }
 
-async function GET(
+export async function GET(
     req: Request,
     context: { params: Promise<{ id: string }> }
 ) {
