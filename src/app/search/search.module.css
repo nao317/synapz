@@ -50,13 +50,20 @@ body {
 
 .searchInput {
   flex: 1;
-  padding: 0.8rem 1rem;
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.8rem; /* 左側にアイコン分の余白 */
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 180, 255, 0.2); /* 境界線も追加 */
   background-color: var(--surface);
   color: var(--text);
   font-size: 1rem;
   outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.searchInput:focus {
+  border-color: rgba(0, 180, 255, 0.5);
+  box-shadow: 0 0 12px rgba(0, 180, 255, 0.2);
 }
 
 .searchButton {
@@ -76,3 +83,19 @@ body {
   box-shadow: 0 0 20px rgba(0, 180, 255, 0.4);
 }
 
+/* 検索入力欄のラッパー */
+.searchInputWrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* 検索アイコン */
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  color: rgba(0, 180, 255, 0.6);
+  pointer-events: none;
+  z-index: 1;
+}
