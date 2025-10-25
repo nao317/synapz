@@ -168,10 +168,3 @@ export async function DELETE(
         );
     }
 }
-
-export async function POST(
-    req: Request,
-    context: { params: Promise<{ id: string }> }
-) {
-    return PATCH(req, context);
-}
