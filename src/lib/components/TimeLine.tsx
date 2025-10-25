@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styles from "./TimeLine.module.css";
 import PostCard from "./PostCard";
 
@@ -37,7 +36,6 @@ export default function TimeLine() {
             {posts.map((post) => (
                 <PostCard
                     key={post.id}
-                    postId={post.id}
                     userIconUrl={post.avatar_url}
                     username={post.username}
                     content={post.content}
