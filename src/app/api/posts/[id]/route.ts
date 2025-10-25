@@ -1,4 +1,4 @@
-// src/app/api/users/[id]/route.ts
+// src/app/api/posts/[id]/route.ts
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { prisma } from '@/lib/prisma';
