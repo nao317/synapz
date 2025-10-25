@@ -109,3 +109,38 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Failed to update the user data' }, { status: 500 });
     }
 }
+export async function DELETE(){
+    try {
+        //認証チェック
+        const supabase = createRouteHandlerClient({ cookies });
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        //db取得
+        const dbUser = await prisma.user.findUnique({
+            where: { id: user.id },
+            select: {
+                name: true,
+                profile: true,
+                email: true,
+                avatarurl: true, // Prismaのカラム名に合わせる
+            },
+        });
+
+        if (!dbUser) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        }
+
+        // 削除
+        const deleteduser = await prisma.user.delete({
+            where: { id: user.id },
+        });
+
+        return NextResponse.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: 'Failed to fetch user data' }, { status: 500 });
+    }
+}
