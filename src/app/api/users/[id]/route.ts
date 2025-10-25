@@ -155,37 +155,78 @@ export async function POST(
     );
   }
 }
-export async function DELETE(){
+
+export async function DELETE(
+    req: Request,
+    context: { params: Promise<{ id: string }> }
+) {
     try {
-        //認証チェック
-        const supabase = createRouteHandlerClient({ cookies });
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
+        const { id } = await context.params;
+        const cookieStore = await cookies();
+
+        const supabase = createServerClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+            {
+                cookies: {
+                    get(name: string) {
+                        return cookieStore.get(name)?.value
+                    },
+                    set(name: string, value: string, options: CookieOptions) {
+                        cookieStore.set({ name, value, ...options })
+                    },
+                    remove(name: string, options: CookieOptions) {
+                        cookieStore.set({ name, value: '', ...options })
+                    },
+                },
+            }
+        )
+
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        // 認証チェック
+        if (!user || user.id !== id) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        //db取得
+        // DBから該当ユーザーを取得
         const dbUser = await prisma.user.findUnique({
-            where: { id: user.id },
+            where: { id },
             select: {
                 name: true,
                 profile: true,
                 email: true,
-                avatarurl: true, // Prismaのカラム名に合わせる
+                avatarurl: true,
             },
         });
 
         if (!dbUser) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
-
-        // 削除
+        
+         // 削除
         const deleteduser = await prisma.user.delete({
             where: { id: user.id },
         });
 
-        return NextResponse.json({ message: 'User deleted successfully' });
+        // 正常レスポンス
+        return NextResponse.json({
+            message: 'User deleted successfully' 
+        });
     } catch (error) {
-        console.error(error);
-        return NextResponse.json({ error: 'Failed to fetch user data' }, { status: 500 });
+        console.error('DELETE /api/users/[id] error', error);
+        return NextResponse.json(
+            { error: 'Failed to fetch user data' },
+            { status: 500 }
+        );
     }
+}
+
+
+
+       
+        
+
+        
