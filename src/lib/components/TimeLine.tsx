@@ -31,7 +31,7 @@ export default function TimeLine() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        const fetchPosets = async () => {
+        const fetchPosts = async () => {
             setLoading(true);
             try {
                 const {
@@ -43,7 +43,7 @@ export default function TimeLine() {
                     return;
                 }
 
-                const response = await fetch('/api/posts', { cache: 'no-store' });
+                const response = await fetch('/api/post', { cache: 'no-store' });
 
                 if (!response.ok) {
                     const text = await response.text().catch(() => '');
@@ -60,7 +60,7 @@ export default function TimeLine() {
                 setLoading(false);
             }
         };
-        fetchPosets();
+        fetchPosts();
     }, [router, supabase]);
 
     if (loading) {
