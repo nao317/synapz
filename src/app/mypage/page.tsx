@@ -7,6 +7,8 @@ import { Button } from "../../lib/components/Button";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { createBrowserClient } from "@supabase/ssr";
+import PostCard from "../../lib/components/PostCard"; // PostCardをインポート
+import { Post } from "../../lib/types";
 
 type UserType = {
   name: string;
@@ -28,6 +30,7 @@ export default function MyPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [user, setUser] = useState<UserType | null>(null);
+  const [posts, setPosts] = useState<Post[]>([]); // 投稿用のstateを追加
   const [editing, setEditing] = useState(false);
   const [username, setUsername] = useState("");
   const [profile, setProfile] = useState("");
@@ -37,43 +40,44 @@ export default function MyPage() {
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchProfileAndPosts = async () => {
       setLoading(true);
       try {
-        // ✅ Supabaseで現在ログイン中のユーザー確認
-        const {
-          data: { user },
-          error: authError,
-        } = await supabase.auth.getUser();
+        const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
         if (authError) throw authError;
-        if (!user) {
+        if (!authUser) {
           router.push("/login");
           return;
         }
 
-        // ✅ 修正版: /api/users/${user.id}
-        const response = await fetch(`/api/users/${user.id}`, { cache: "no-store" });
-
-        if (!response.ok) {
-          const text = await response.text().catch(() => "");
-          throw new Error(`Failed to fetch profile: ${response.status} ${text}`);
+        // ユーザープロフィールの取得
+        const userResponse = await fetch(`/api/users/${authUser.id}`, { cache: "no-store" });
+        if (!userResponse.ok) {
+          throw new Error("Failed to fetch profile");
         }
+        const userData: UserType = await userResponse.json();
+        setUser(userData);
+        setUsername(userData.name || "");
+        setProfile(userData.profile || "");
+        setAvatar_preview(userData.avatar_url || "/defaultIcon.png");
 
-        const data: UserType = await response.json();
+        // ユーザーの投稿を取得
+        const postsResponse = await fetch(`/api/users/${authUser.id}/posts`, { cache: "no-store" });
+        if (!postsResponse.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+        const postsData: Post[] = await postsResponse.json();
+        setPosts(postsData);
 
-        setUser(data);
-        setUsername(data.name || "");
-        setProfile(data.profile || "");
-        setAvatar_preview(data.avatar_url || "/defaultIcon.png");
       } catch (e) {
-        console.error("Profile fetch error:", e);
-        setError("ユーザープロフィールの取得に失敗しました。");
+        console.error("Profile or posts fetch error:", e);
+        setError("ユーザー情報または投稿の取得に失敗しました。");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProfile();
+    fetchProfileAndPosts();
   }, [router, supabase.auth]);
 
   const handler_avatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,16 +101,13 @@ export default function MyPage() {
     setError("");
 
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("まだ認証されていません。");
 
       const formData = new FormData();
       formData.append("name", username || "");
       formData.append("profile", profile);
 
-      // ✅ Supabase Storageにアップロード
       if (avatarFile) {
         const ext = avatarFile.name.split(".").pop();
         const filePath = `avatars/${user.id}.${ext}`;
@@ -120,7 +121,6 @@ export default function MyPage() {
         formData.append("avatar_url", publicUrl);
       }
 
-      // ✅ 修正版: POSTも /api/users/${user.id}
       const response = await fetch(`/api/users/${user.id}`, {
         method: "POST",
         body: formData,
@@ -214,6 +214,15 @@ export default function MyPage() {
               )}
             </div>
           </div>
+        </div>
+        {/* 投稿一覧の表示 */}
+        <div className={styles.postsSection}>
+          <h2>あなたの投稿</h2>
+          {posts.length > 0 ? (
+            posts.map((post) => <PostCard key={post.id} post={post} />)
+          ) : (
+            <p>まだ投稿がありません。</p>
+          )}
         </div>
       </div>
     </div>

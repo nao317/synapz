@@ -4,29 +4,23 @@ import React, { useState } from "react";
 import styles from "./PostCard.module.css";
 import Image from "next/image";
 import { ThumbsUp } from "lucide-react";
+import { Post } from "../types";
 
 type PostCardProps = {
-    userIconUrl: string | null | undefined;
-    username: string;
-    content: string;
-    initialIsLiked: boolean;
-    initialLikeCount: number;
+    post: Post;
 };
 
 const Default_user_icon = "/defaultIcon.png";
 
-export default function PostCard({
-    userIconUrl,
-    username,
-    content,
-    initialIsLiked,
-    initialLikeCount
-}: PostCardProps) {
+export default function PostCard({ post }: PostCardProps) {
+    const { user, content, likes } = post;
+    const initialSrc = user?.avatarurl || Default_user_icon;
+    const username = user?.name || "Unknown User";
 
-    const initialSrc = userIconUrl || Default_user_icon;
     const [iconSrc, setIconSrc] = useState(initialSrc);
-    const [isLiked, setIsLiked] = useState(initialIsLiked);
-    const [likeCount, setLikeCount] = useState(initialLikeCount || 0);
+    // 本来はユーザーがいいねしているかどうかの情報も必要
+    const [isLiked, setIsLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(likes?.length || 0);
 
     const handleLikeClick = () => {
         setIsLiked(!isLiked);
