@@ -51,22 +51,15 @@ export async function GET(
         });
 
         if (!dbUser) {
-            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+            return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        // 正常レスポンス
-        return NextResponse.json({
-            name: dbUser.name ?? '',
-            profile: dbUser.profile ?? '',
-            email: dbUser.email ?? '',
-            avatar_url: dbUser.avatarurl ?? '',
-        });
+        const { avatarurl, ...rest } = dbUser;
+
+        return NextResponse.json({ ...rest, avatar_url: avatarurl });
     } catch (error) {
-        console.error('GET /api/users/[id] error', error);
-        return NextResponse.json(
-            { error: 'Failed to fetch user data' },
-            { status: 500 }
-        );
+        console.error("Error fetching user:", error);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
 
