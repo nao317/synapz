@@ -35,7 +35,7 @@ export async function GET() {
 // 投稿新規作成
 export async function POST(req: Request) {
     try {
-        const cookieStore = cookies()
+        const cookieStore = await cookies();
 
         const supabase = createServerClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,
