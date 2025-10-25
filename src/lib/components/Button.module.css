@@ -8,7 +8,7 @@
     cursor: pointer;
     background: linear-gradient(90deg, #090e6e, #02547a);
     color: #0a3269;
-    transition: transform 0.25s ease, box-shadow 0.4s ease, background 0.4s ease, border-color 0.4s ease;;
+    transition: transform 0.25s ease, box-shadow 0.4s ease, background 0.4s ease, border-color 0.4s ease;
     box-shadow: 0 0 16px rgba(8, 55, 79, 0.45), 0 0 32px rgba(150, 220, 255, 0.25);
 }
 
