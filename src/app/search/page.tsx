@@ -4,6 +4,7 @@
 import styles from './search.module.css';
 import Header from '../../lib/components/Header';
 import { Button } from '../../lib/components/Button';
+
 import { Search } from 'lucide-react';
 
 export default function SearchPage() {
@@ -11,7 +12,6 @@ export default function SearchPage() {
     <div className={styles.dashboard}>
       <Header>
       </Header>
-
       <div className={styles.container}>
         <div className={styles.searchContainer}>
           <div className={styles.searchInputWrapper}>
