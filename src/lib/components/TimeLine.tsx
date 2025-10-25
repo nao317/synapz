@@ -43,7 +43,7 @@ export default function TimeLine() {
                     return;
                 }
 
-                const response = await fetch('/api/post', { cache: 'no-store' });
+                const response = await fetch('/api/posts', { cache: 'no-store' });
 
                 if (!response.ok) {
                     const text = await response.text().catch(() => '');
