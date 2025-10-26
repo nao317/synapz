@@ -66,14 +66,14 @@ export async function POST(req: Request) {
 
         const { content, image } = await req.json()
 
-        if (!content) {
-            return NextResponse.json({ error: 'Missing content' }, { status: 400 })
+        if (!content && !image) {
+            return NextResponse.json({ error: 'Missing content or image' }, { status: 400 })
         }
 
         const newPost = await prisma.post.create({
             data: {
                 content,
-                image,
+                image: image || null,
                 userId: user.id,
             },
             include: {
