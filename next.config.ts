@@ -11,6 +11,12 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'tuetppybguivjsvevuvj.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/posts/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
         port: '',
         pathname: '/**',
