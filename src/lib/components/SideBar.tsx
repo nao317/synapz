@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronLeft, Home, Bell, User, PenSquare, LogOut, Search } from 'lucide-react';
 import styles from './SideBar.module.css';
 import { useRouter } from 'next/navigation';
@@ -46,7 +47,7 @@ export default function SideBar({ isOpen, onClose }: SidebarProps) {
         };
 
         fetchUserData();
-    }, [isOpen]);
+    }, [isOpen, supabase.auth]);
 
     return (
         <AnimatePresence mode="wait">
@@ -81,7 +82,7 @@ export default function SideBar({ isOpen, onClose }: SidebarProps) {
                             <div className={styles.userHeader}>
                             <div className={styles.avatar}>
                                 {avatarUrl ? (
-                                    <img src={avatarUrl} alt="avatar" />
+                                    <Image src={avatarUrl} alt="avatar" width={26} height={26} />
                                 ) : (
                                     <User size={26} />
                                 )}

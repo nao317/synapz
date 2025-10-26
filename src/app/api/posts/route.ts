@@ -64,7 +64,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-        const { content } = await req.json()
+        const { content, image } = await req.json()
 
         if (!content) {
             return NextResponse.json({ error: 'Missing content' }, { status: 400 })
@@ -73,7 +73,17 @@ export async function POST(req: Request) {
         const newPost = await prisma.post.create({
             data: {
                 content,
+                image,
                 userId: user.id,
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        avatarurl: true,
+                    },
+                },
             },
         })
         return NextResponse.json(newPost, { status: 201 })

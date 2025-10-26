@@ -8,6 +8,7 @@ export type Like = {
 export type Post = {
     id: string;
     content: string;
+    image?: string | null;
     created_at: string;
     user: {
         id: string;

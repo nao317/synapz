@@ -5,6 +5,7 @@ import styles from "./PostCard.module.css";
 import Image from "next/image";
 import { ThumbsUp } from "lucide-react";
 import { Post } from "../types";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 type PostCardProps = {
     post: Post;
@@ -13,7 +14,7 @@ type PostCardProps = {
 const Default_user_icon = "/defaultIcon.png";
 
 export default function PostCard({ post }: PostCardProps) {
-    const { user, content, likes } = post;
+    const { user, content, likes, image } = post;
     const initialSrc = user?.avatarurl || Default_user_icon;
     const username = user?.name || "Unknown User";
 
@@ -48,7 +49,8 @@ export default function PostCard({ post }: PostCardProps) {
                 </span>
             </div>
             <div className={styles.content}>
-                {content}
+                <MarkdownRenderer>{content}</MarkdownRenderer>
+                {image && <Image src={image} alt="Post image" width={500} height={300} />}
             </div>
             <div className={styles.footer}>
                 <button onClick={handleLikeClick} className={styles.likebutton}>
