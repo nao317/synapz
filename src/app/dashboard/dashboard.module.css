@@ -37,3 +37,18 @@ body {
     padding: 2rem;
     scroll-behavior: smooth;
 }
+
+/* --- Responsive (Smartphone) --- */
+@media (max-width: 768px) {
+  .body {
+    flex-direction: column; /* 横並びを縦並びに */
+  }
+
+  .main {
+    padding: 1rem; /* 余白を少し狭くする */
+  }
+
+  .dashboard {
+    font-size: 0.95rem; /* 全体を少し小さめに */
+  }
+}
