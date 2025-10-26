@@ -21,10 +21,8 @@ body {
 .dashboard {
     display: flex;
     flex-direction: column;
-    height: 100vh;
     background: radial-gradient(ellipse at top, #0b1522 0%, #050b13 100%);
     color: #e6f7ff;
-    overflow: hidden;
 }
 
 .body {
