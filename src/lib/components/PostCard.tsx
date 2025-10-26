@@ -50,7 +50,16 @@ export default function PostCard({ post }: PostCardProps) {
             </div>
             <div className={styles.content}>
                 <MarkdownRenderer>{content}</MarkdownRenderer>
-                {image && <Image src={image} alt="Post image" width={500} height={300} />}
+                {image && (
+    <Image 
+        src={image} 
+        alt="Post image" 
+        width={500} 
+        height={300}
+        className={styles.postImage}
+        style={{ width: '100%', height: 'auto' }}
+    />
+)}
             </div>
             <div className={styles.footer}>
                 <button onClick={handleLikeClick} className={styles.likebutton}>

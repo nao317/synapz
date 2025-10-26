@@ -58,3 +58,20 @@
     color: var(--text);
     margin-left: 0.5rem;
 }
+
+/* 投稿画像 */
+.postImage {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+
+/* スマホ用 */
+@media (max-width: 768px) {
+  .postImage {
+    max-height: 400px;
+  }
+}
