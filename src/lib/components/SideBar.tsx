@@ -105,7 +105,6 @@ export default function SideBar({ isOpen, onClose }: SidebarProps) {
 
                         <nav className={styles.nav}>
                             <Link href="/dashboard"><Home /> ホーム</Link>
-                            <Link href="/post"><PenSquare /> 投稿</Link>
                             <Link href="/notifications"><Bell /> 通知</Link>
                             <Link href="/mypage"><User /> マイページ</Link>
                             <Link href="/search"><Search />検索</Link>
